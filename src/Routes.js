@@ -1,6 +1,6 @@
 import { Switch, Route, BrowserRouter } from 'react-router-dom'
-import Home from './components/home'
-import Create from './components/create'
+import Home from './pages/home'
+import Create from './pages/create'
 import './styles/utils.css'
 
 const Routes = () => {

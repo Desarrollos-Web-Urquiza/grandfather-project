@@ -1,12 +1,9 @@
-import React, {useState} from 'react';
-import {Helmet} from "react-helmet";
+import React from 'react';
+import { Helmet } from "react-helmet";
 import Card from '@material-ui/core/Card';
 import { grey } from '@material-ui/core/colors';
 import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Alert from '@material-ui/lab/Alert';	
-// import { firestore } from "../FirebaseConfig";
 
 const CardSelect = withStyles((theme) => ({
   root: {
@@ -19,15 +16,7 @@ const CardSelect = withStyles((theme) => ({
 }))(Card);
 
 const Home = props => {
-
-	const [name, setName] = useState(null);
-	const [secuence, setSecuence] = useState({
-		initial: null,
-		final: null
-	})
-
 	return(
-	
 		<div>
 			<Helmet>
 				<title>Grandfather project - Altas, bajas, modificaciones</title>
