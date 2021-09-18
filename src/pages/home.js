@@ -28,8 +28,8 @@ const Home = props => {
 		setErr(false)
 		console.log(e.target.value)
 		let operationNumber = e.target.value
-		if(operationNumber < 1 || operationNumber > 4)	{
-			e.target.value = ""
+		if((operationNumber < 1 || operationNumber > 4) && e.target.value != "")	{
+			setErr("Error: Debe ingresar un número del 1 a 4")
 			setData("")
 		}	else	{
 			setData(e.target.value )
@@ -37,10 +37,12 @@ const Home = props => {
 	}
 	
 	const redirection = () =>	{
-		if(data == ""){
-			setErr("Datos invalidos")
-		}	else {
-			props.history.push('/ingresoClave/' + data)
+		if(!err){
+			if(data == ""){
+				setErr("Error: Los datos están vacíos")
+			}	else {
+				props.history.push('/ingresoClave/' + data)
+			}
 		}
 	}
 
@@ -49,7 +51,7 @@ const Home = props => {
 			<Helmet>
 				<title>Grandfather project - Índice alumnos</title>
 			</Helmet>
-			<h1   align="center"  style={{marginLeft: 5}}>Índice alumnos</h1>
+			<h1 align="center"  style={{marginLeft: 5}}>Índice alumnos</h1>
 			<div align="center"  style={{marginTop: 150}}>
 				<div className="card-container">
 					<CardSelect style={{  paddingTop: 10, paddingBottom: 20 }} >
@@ -68,9 +70,8 @@ const Home = props => {
 							onChange={handleData}
 							error={err}
 						/>
-						<br />		
 						{err && <p style={{color: "red"}}> {err} </p> }	
-						<br />		
+						<br/>
 						<Button variant="contained" color="primary" onClick={()=> redirection()}>
 							Seleccionar operación
 						</Button>

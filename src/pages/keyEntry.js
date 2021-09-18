@@ -26,6 +26,8 @@ const KeyEntry = props => {
 	useEffect(() => {
 		let semiParams = window.location.href.split('/')
 		let paramsFinished = semiParams[4]
+		if(parseInt(paramsFinished) === 4) 
+			props.history.push('/fin')
 		setOperationNumber(paramsFinished)
 	},[]);
 
