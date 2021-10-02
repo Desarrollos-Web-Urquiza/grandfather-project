@@ -3,10 +3,9 @@ import { Helmet } from "react-helmet";
 import Card from '@material-ui/core/Card';
 import { grey } from '@material-ui/core/colors';
 import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { add } from "../db/functions/dbUtils";
-// import DataInput from "../components/dataInput";
+import DataInput from "../components/dataInput";
 
 const CardSelect = withStyles((theme) => ({
   root: {
@@ -21,12 +20,7 @@ const CardSelect = withStyles((theme) => ({
 const Create = props => {
 	//data inputs
 	const [data, setData] = useState({});
-	//filter inputs
-	const handleData = (e) =>	{
-		console.log(e.target.value)
-		console.log(e.target.name)
-		setData({...data, [e.target.name]: e.target.value} )
-	}
+
 	console.log(data)
 	return(
 		<div>
@@ -40,12 +34,12 @@ const Create = props => {
 						<h2 style={{marginTop: 15}}>Crear alumno</h2>
 						<br />
 						<br />		
-						{/* <DataInput field="DNI" setData={setData} />
-						<DataInput field="surname" setData={setData} />
-						<DataInput field="name" setData={setData} /> */}
-						<div align="left" className="box-input">
+						<DataInput field="DNI" setData={setData} type={"number"} name={"DNI"} state={data}/>
+						<DataInput field="Apellido" setData={setData} type={"text"} name={"surname"} state={data}/>
+						<DataInput field="Nombre" setData={setData} type={"text"} name={"name"} state={data}/>
+						{/*<div align="left" className="box-input">
 							<h3>DNI:</h3>
-							<div style={{marginTop: 15, marginLeft: 10 }} >
+							<div className="-mt-3 ml-4 mb-8">
 								<TextField 
 									name="DNI"
 									onChange={handleData}
@@ -55,7 +49,7 @@ const Create = props => {
 						</div>
 						<div align="left" className="box-input">
 							<h3>Apellido:</h3>
-							<div style={{marginTop: 15, marginLeft: 10 }} >
+							<div className="-mt-3 ml-4 mb-8" >
 								<TextField 
 									name="surname"
 									onChange={handleData}
@@ -64,13 +58,13 @@ const Create = props => {
 						</div>
 						<div align="left" className="box-input">
 							<h3>Nombre:</h3>
-							<div style={{marginTop: 10, marginLeft: 10 }} >
+							<div className="-mt-3 ml-4 mb-8" >
 								<TextField 
 									name="name"
 									onChange={handleData}
 								/>
 							</div>
-						</div>
+						</div>*/}
 						<Button style={{marginTop: 60, marginLeft: 10 }} variant="contained" color="primary" onClick={() => add(data)}>
 							Crear alumno
 						</Button>

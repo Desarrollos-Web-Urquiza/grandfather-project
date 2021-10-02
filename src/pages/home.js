@@ -51,7 +51,7 @@ const Home = props => {
 			<Helmet>
 				<title>Grandfather project - Índice alumnos</title>
 			</Helmet>
-			<h1 align="center"  style={{marginLeft: 5}}>Índice alumnos</h1>
+			<h1 align="center" className="text-5xl" >Índice alumnos</h1>
 			<div align="center"  style={{marginTop: 150}}>
 				<div className="card-container">
 					<CardSelect style={{  paddingTop: 10, paddingBottom: 20 }} >
