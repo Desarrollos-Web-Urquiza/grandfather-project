@@ -8,6 +8,7 @@ import { grey } from '@material-ui/core/colors';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import { search } from "../db/functions/dbUtils";
 
 const CardSelect = withStyles((theme) => ({
   root: {
@@ -22,6 +23,8 @@ const CardSelect = withStyles((theme) => ({
 const KeyEntry = props => {
 
 	const [operationNumber, setOperationNumber] = useState(null);
+	const [DNI, setDNI] = useState(null);
+	const [searchResult, setSearchResult] = useState(null);
 
 	useEffect(() => {
 		let semiParams = window.location.href.split('/')
@@ -31,6 +34,19 @@ const KeyEntry = props => {
 		setOperationNumber(paramsFinished)
 	},[]);
 
+	const handleData = (e) =>	{
+		console.log(e.target.value)
+		let DNI = parseInt(e.target.value)
+		setDNI(DNI)
+	}
+
+	const executesSearch =  async () =>	{
+		let promiseSearch =  await search(DNI)
+		setSearchResult(promiseSearch)
+	}
+	
+	console.log(searchResult)
+	
 	return(
 		<div className="mainCenter">
 			<Helmet>
@@ -46,9 +62,10 @@ const KeyEntry = props => {
 							style={{marginBottom: 70, marginTop: 50, width: 200 }} 
 							type="number"
 							InputProps={{ inputProps: { min: 0, max: 9 } }}
+							onChange={handleData}
 						/>
 						<br />		
-						<Button variant="contained" color="primary">
+						<Button variant="contained" color="primary" onClick={() => executesSearch()}>
 							Realizar operación
 						</Button>
 					</CardSelect>
