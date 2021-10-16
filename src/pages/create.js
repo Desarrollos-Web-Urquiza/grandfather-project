@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Helmet } from "react-helmet";
 import Card from '@material-ui/core/Card';
 import { grey } from '@material-ui/core/colors';
@@ -20,8 +20,29 @@ const CardSelect = withStyles((theme) => ({
 const Create = props => {
 	//data inputs
 	const [data, setData] = useState({});
+	const [err, setErr] = useState(false);
 
-	console.log(data)
+	useEffect(() => {
+		let semiParams = window.location.href.split('/')
+		let paramsFinished = semiParams[4]
+		setData({...data, DNI: paramsFinished})
+	},[]);
+
+	const validationData = () =>	{
+		console.log(data.name)
+		console.log(data.surname)
+		console.log(data)
+		if(data.surname === '' || typeof(data.surname) == 'undefined'){
+			setErr('Ingrese un apellido')
+			return
+		}
+		if(data.name === '' || typeof(data.name) == 'undefined'){
+			setErr('Ingrese un nombre')
+			return
+		}
+		add(data, props.history)
+	}
+
 	return(
 		<div>
 			<Helmet>
@@ -29,43 +50,20 @@ const Create = props => {
 			</Helmet>
 			<h1 align="center" style={{marginRight: 5}}>Alta</h1>
 			<div  align="center" style={{marginTop: 150}}>
-				<div className="card-container">
+				<div className="card-container">	
 					<CardSelect style={{  paddingTop: 10, paddingBottom: 20 }} >
 						<h2 style={{marginTop: 15}}>Crear alumno</h2>
 						<br />
 						<br />		
-						<DataInput field="DNI" setData={setData} type={"number"} name={"DNI"} state={data}/>
-						<DataInput field="Apellido" setData={setData} type={"text"} name={"surname"} state={data}/>
-						<DataInput field="Nombre" setData={setData} type={"text"} name={"name"} state={data}/>
-						{/*<div align="left" className="box-input">
-							<h3>DNI:</h3>
-							<div className="-mt-3 ml-4 mb-8">
-								<TextField 
-									name="DNI"
-									onChange={handleData}
-									type="number"
-								/>
-							</div>
+						<div align="left" className="flex flex-wrap justify-initial -mt-1 ml-2 mb-8">
+							<p>DNI: </p> 
+							<p className="ml-28">{data.DNI} </p>
 						</div>
-						<div align="left" className="box-input">
-							<h3>Apellido:</h3>
-							<div className="-mt-3 ml-4 mb-8" >
-								<TextField 
-									name="surname"
-									onChange={handleData}
-								/>
-							</div>
-						</div>
-						<div align="left" className="box-input">
-							<h3>Nombre:</h3>
-							<div className="-mt-3 ml-4 mb-8" >
-								<TextField 
-									name="name"
-									onChange={handleData}
-								/>
-							</div>
-						</div>*/}
-						<Button style={{marginTop: 60, marginLeft: 10 }} variant="contained" color="primary" onClick={() => add(data)}>
+						<DataInput field="Apellido" setData={setData} type={"text"} name={"surname"} state={data} setErr={setErr}/>
+						<DataInput field="Nombre" setData={setData} type={"text"} name={"name"} state={data} setErr={setErr}/>
+						{err && <p style={{color: "red"}}> {err} </p> }	
+						<br />		
+						<Button style={{marginTop: 60, marginLeft: 10 }} variant="contained" color="primary" onClick={() => validationData()}>
 							Crear alumno
 						</Button>
 					</CardSelect>

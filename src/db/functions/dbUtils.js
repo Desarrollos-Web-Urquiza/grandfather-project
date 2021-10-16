@@ -1,6 +1,6 @@
 import { db } from "../firebase/FirebaseConfig";
 
-export const add = async (data) => {
+export const add = async (data, redirect) => {
     await db.collection("grandfather-project").add({
         student:{ 
             DNI: parseInt(data.DNI),
@@ -10,6 +10,7 @@ export const add = async (data) => {
     })
     .then(function() {
         console.log("Document written");
+        redirect.push('/')
     })
     .catch(function(error) {
         console.error("Error adding document: ", error);
@@ -18,6 +19,7 @@ export const add = async (data) => {
 
 export const search =  (data) => {
     return new Promise( async (resolve, reject) => {
+        console.log(data)
         // XA 
         // 0 si no existe un alumno 
         // 1 si sí existe
@@ -28,11 +30,13 @@ export const search =  (data) => {
             querySnapshot.forEach(function(doc) {
                 XA = doc.data()
             });
+            console.log(XA)
             if(XA)  {
                 XA = 1
             }  else {
                 XA = 0
             }
+            console.log(XA)
             return resolve(XA)
         })
         .catch(function(error) {

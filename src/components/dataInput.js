@@ -3,6 +3,7 @@ import TextField from '@material-ui/core/TextField';
 const DataInput =  (props) => {
     //filter input
     const handleData = (e) =>	{
+        props.setErr(false)
 		console.log(e.target.value)
 		console.log(e.target.name)
 		console.log(props.setData)

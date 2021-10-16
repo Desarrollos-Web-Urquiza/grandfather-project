@@ -23,19 +23,35 @@ const CardSelect = withStyles((theme) => ({
 const KeyEntry = props => {
 
 	const [operationNumber, setOperationNumber] = useState(null);
-	const [DNI, setDNI] = useState(null);
 	const [searchResult, setSearchResult] = useState(null);
+	const [operationType, setOperationType] = useState(null);
+	const [err, setErr] = useState(false);
+	const [DNI, setDNI] = useState(null);
 
 	useEffect(() => {
 		let semiParams = window.location.href.split('/')
 		let paramsFinished = semiParams[4]
-		if(parseInt(paramsFinished) === 4) 
-			props.history.push('/fin')
+		switch (paramsFinished) {
+			case "1":
+				setOperationType('Alta')
+				break;
+			case "2":
+				setOperationType('Modificación')
+				break;
+			case "3":
+				setOperationType('Baja')
+				break;
+			case "4":
+				props.history.push('/fin')
+				break;
+			default:
+				setOperationType('No seleccionó operación')
+		}
 		setOperationNumber(paramsFinished)
 	},[]);
 
 	const handleData = (e) =>	{
-		console.log(e.target.value)
+		setErr(false)
 		let DNI = parseInt(e.target.value)
 		setDNI(DNI)
 	}
@@ -43,17 +59,35 @@ const KeyEntry = props => {
 	const executesSearch =  async () =>	{
 		let promiseSearch =  await search(DNI)
 		setSearchResult(promiseSearch)
+		analyzeSearchResult(promiseSearch)
+	}
+
+	const analyzeSearchResult =  (directSearchResult) =>	{
+		if(parseInt(operationNumber) === 1){
+			if(parseInt(directSearchResult) === 0){
+				console.log('Alumno no encontrado')
+				if(DNI !== null && DNI !== '' ){
+					props.history.push('/alumnoAlta/' + DNI)
+				} else	{
+					setErr('Debe ingresar un DNI')
+				}
+			} else if(parseInt(directSearchResult) === 1){
+				console.log('Alumno sí encontrado')
+				setErr('El DNI ingresado ya existe. No lo puede volver a crear')
+			}
+		}
 	}
 	
 	console.log(searchResult)
 	
 	return(
-		<div className="mainCenter">
+		<div align="center" className="mainCenter">
 			<Helmet>
 				<title>Grandfather project - Ingreso de clave</title>
 			</Helmet>
-			<h1 align="center" style={{marginLeft: 5}}>Ingreso de clave</h1>
-			<div align="center"  style={{marginTop: 150}}>
+			<h1 style={{marginLeft: 5}}>Ingreso de clave</h1>
+			<h2 className={"m-8"}>Operación seleccionada: {operationType} </h2>
+			<div style={{marginTop: 150}}>
 				<div className="card-container">
 					<CardSelect style={{  paddingTop: 10, paddingBottom: 20 }} >
 						<h2 >Ingrese DNI de alumno</h2>
@@ -64,6 +98,7 @@ const KeyEntry = props => {
 							InputProps={{ inputProps: { min: 0, max: 9 } }}
 							onChange={handleData}
 						/>
+						{err && <p style={{color: "red"}}> {err} </p> }	
 						<br />		
 						<Button variant="contained" color="primary" onClick={() => executesSearch()}>
 							Realizar operación
