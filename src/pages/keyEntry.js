@@ -52,6 +52,12 @@ const KeyEntry = props => {
 
 	const handleData = (e) =>	{
 		setErr(false)
+		if(isNaN(parseInt(e.target.value)) && e.target.value != "")	{
+			setErr("Error: No puede ingresar letras. Debe ingresar un número")
+			setDNI("")
+			e.target.value = ""
+			return
+		}
 		let DNI = parseInt(e.target.value)
 		setDNI(DNI)
 	}
@@ -73,8 +79,14 @@ const KeyEntry = props => {
 				}
 			} else if(parseInt(directSearchResult) === 1){
 				console.log('Alumno sí encontrado')
-				setErr('El DNI ingresado ya existe. No lo puede volver a crear')
+				setErr('Error: El DNI ingresado ya existe. No lo puede volver a crear')
 			}
+		}
+	}
+
+	const handleKeyDown = (event) => {
+		if (event.key === 'Enter') {
+			executesSearch()
 		}
 	}
 	
@@ -94,9 +106,11 @@ const KeyEntry = props => {
 						<TextField 
 							variant="outlined" 
 							style={{marginBottom: 70, marginTop: 50, width: 200 }} 
-							type="number"
+							type="text"
 							InputProps={{ inputProps: { min: 0, max: 9 } }}
+							autoFocus={true}
 							onChange={handleData}
+							onKeyDown={handleKeyDown} 
 						/>
 						{err && <p style={{color: "red"}}> {err} </p> }	
 						<br />		
