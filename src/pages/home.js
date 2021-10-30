@@ -64,17 +64,17 @@ const Home = props => {
 			<Helmet>
 				<title>Grandfather project - Índice alumnos</title>
 			</Helmet>
-			<h1 align="center" className="text-5xl" >Índice alumnos</h1>
-			<div align="center"  style={{marginTop: 150}}>
+			<h2 align="center">ALUMNADO</h2>
+			<div align="center"  >
 				<div className="card-container">
-					<CardSelect style={{  paddingTop: 10, paddingBottom: 20 }} >
-						<h3 className="my-4">Ingrese número de operación a realizar</h3>
-						<p>1-ALTAS</p>
-						<p>2-MODIFICACIONES</p>
-						<p>3-BAJAS</p>
-						<p>4-FIN</p>
-						<br />
-						<br />		
+					<p>1 Ingresos</p>
+					<p>2 Modificaciones</p>
+					<p>3 Bajas</p>
+					<p>4 Fin</p>
+					<br />
+					<br />	
+					<div className="flex flex-row ">
+						<p>Ingrese su opción:</p>
 						<TextField 
 							variant="outlined" 
 							style={{marginBottom: 50, width: 200 }} 
@@ -85,12 +85,11 @@ const Home = props => {
 							autoFocus={true}
 							onKeyDown={handleKeyDown} 
 						/>
-						{err && <p style={{color: "red"}}> {err} </p> }	
-						<br/>
-						<Button variant="contained" color="primary" onClick={()=> redirection()} >
-							Ingresar operación
-						</Button>
-					</CardSelect>
+					</div>	
+					
+					{err && <p style={{color: "red"}}> {err} </p> }	
+					<br/>
+					
 				</div>
 			</div>
 		</div>

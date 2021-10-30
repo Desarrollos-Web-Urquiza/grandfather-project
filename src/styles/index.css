@@ -12,6 +12,9 @@
   h3 {
     @apply text-2xl;
   }
+  .card-container p{
+    @apply mt-4;
+  }
 }
 
 body {
