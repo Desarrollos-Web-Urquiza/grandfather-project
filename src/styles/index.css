@@ -12,7 +12,12 @@
   h3 {
     @apply text-2xl;
   }
-  .card-container p{
+  @media(min-width: 420px){
+    #div-options-input{
+      @apply mr-20;  
+    }
+  }
+  #div-options p{
     @apply mt-4;
   }
 }

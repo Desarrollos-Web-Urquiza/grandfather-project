@@ -67,14 +67,16 @@ const Home = props => {
 			<h2 align="center">ALUMNADO</h2>
 			<div align="center"  >
 				<div className="card-container">
-					<p>1 Ingresos</p>
-					<p>2 Modificaciones</p>
-					<p>3 Bajas</p>
-					<p>4 Fin</p>
+					<div id="div-options" align="left" className="flex flex-col justify-initial w-32">
+						<p>1 Ingresos</p>
+						<p>2 Modificaciones</p>
+						<p>3 Bajas</p>
+						<p>4 Fin</p>
+					</div>
 					<br />
 					<br />	
-					<div className="flex flex-row ">
-						<p>Ingrese su opción:</p>
+					<div  id="div-options-input" className="flex flex-row flex-wrap justify-around max-w-sm">
+						<p className="mt-4">Ingrese su opción:</p>
 						<TextField 
 							variant="outlined" 
 							style={{marginBottom: 50, width: 200 }} 
