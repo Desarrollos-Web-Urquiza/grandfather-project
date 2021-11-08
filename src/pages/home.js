@@ -21,7 +21,6 @@ const CardSelect = withStyles((theme) => ({
 
 const Home = props => {
 
-	const [data, setData] = useState("");
 	const [err, setErr] = useState(false);
 
 	const handleData = (e) =>	{
@@ -30,20 +29,20 @@ const Home = props => {
 		let operationNumber = e.target.value
 		if(isNaN(parseInt(operationNumber)) && operationNumber != "")	{
 			setErr("Error: No puede ingresar letras. Debe ingresar un número")
-			setData("")
+		
 			e.target.value = ""
 			return
 		}
 		if((operationNumber < 1 || operationNumber > 4) && e.target.value != "")	{
 			setErr("Error: Debe ingresar un número del 1 a 4")
-			setData("")
 			e.target.value = ""
+			return
 		}	else	{
-			setData(e.target.value )
+			redirection(e.target.value)
 		}
 	}
 	
-	const redirection = () =>	{
+	const redirection = (data) =>	{
 		if(!err){
 			if(data == ""){
 				setErr("Error: Los datos están vacíos")
@@ -53,11 +52,11 @@ const Home = props => {
 		}
 	}
 
-	const handleKeyDown = (event) => {
+	/*const handleKeyDown = (event) => {
 		if (event.key === 'Enter') {
 			redirection()
 		}
-	}
+	}*/
 
 	return(
 		<div className="mainCenter">
@@ -68,7 +67,7 @@ const Home = props => {
 			<div align="center"  >
 				<div className="card-container">
 					<div id="div-options" align="left" className="flex flex-col justify-initial w-32">
-						<p>1 Ingresos</p>
+						<p>1 Altas</p>
 						<p>2 Modificaciones</p>
 						<p>3 Bajas</p>
 						<p>4 Fin</p>
@@ -85,13 +84,10 @@ const Home = props => {
 							onChange={handleData}
 							error={err}
 							autoFocus={true}
-							onKeyDown={handleKeyDown} 
 						/>
 					</div>	
-					
-					{err && <p style={{color: "red"}}> {err} </p> }	
 					<br/>
-					
+					{err && <b><p style={{color: "red"}} className="-mt-8"> {err} </p></b> }	
 				</div>
 			</div>
 		</div>

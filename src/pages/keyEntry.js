@@ -27,19 +27,20 @@ const KeyEntry = props => {
 	const [operationType, setOperationType] = useState(null);
 	const [err, setErr] = useState(false);
 	const [DNI, setDNI] = useState(null);
+	const [confirmationMode, setConfirmationMode] = useState(false);
 
 	useEffect(() => {
 		let semiParams = window.location.href.split('/')
 		let paramsFinished = semiParams[4]
 		switch (paramsFinished) {
 			case "1":
-				setOperationType('Alta')
+				setOperationType('ALTAS')
 				break;
 			case "2":
-				setOperationType('Modificación')
+				setOperationType('MODIFICACIÓN')
 				break;
 			case "3":
-				setOperationType('Baja')
+				setOperationType('BAJA')
 				break;
 			case "4":
 				props.history.push('/fin')
@@ -60,6 +61,17 @@ const KeyEntry = props => {
 		}
 		let DNI = parseInt(e.target.value)
 		setDNI(DNI)
+	}
+	const handleCorfirmationModeData = (e) =>	{
+		console.log(e.target.value)
+		let confirmationData = e.target.value
+		if(confirmationData == "1")
+			executesSearch()
+		if(confirmationData == "2")
+			setConfirmationMode(false)
+		if(confirmationData == "3")
+			props.history.push('/')
+
 	}
 
 	const executesSearch =  async () =>	{
@@ -86,7 +98,8 @@ const KeyEntry = props => {
 
 	const handleKeyDown = (event) => {
 		if (event.key === 'Enter') {
-			executesSearch()
+			//executesSearch()
+			setConfirmationMode(true)
 		}
 	}
 	
@@ -97,26 +110,47 @@ const KeyEntry = props => {
 			<Helmet>
 				<title>Grandfather project - Ingreso de clave</title>
 			</Helmet>
-			<h1 style={{marginLeft: 5}}>Ingreso de clave</h1>
-			<h2 className={"m-8"}>Operación seleccionada: {operationType} </h2>
+			<h2 style={{marginLeft: 5}}>ALUMNADO - {operationType}</h2>
 			<div style={{marginTop: 150}}>
 				<div className="card-container">
 					<CardSelect style={{  paddingTop: 10, paddingBottom: 20 }} >
-						<h2 >Ingrese DNI de alumno</h2>
-						<TextField 
+						{ !confirmationMode &&<h2 >Ingrese DNI de alumno</h2> }
+						{ confirmationMode && 
+							<div>
+								<h2 >DNI ingresado: {DNI} </h2>
+								<div id="div-options" align="left" className="flex flex-col justify-initial w-56">
+									<p>1 Datos correctos, continuar</p>
+									<p>2 Datos incorrectos, corregir</p>
+									<p>3 Volver al Índice General</p>
+								</div>
+							</div>
+						}
+						{ !confirmationMode && 
+							<TextField 
+								variant="outlined" 
+								style={{marginBottom: 70, marginTop: 50, width: 200 }} 
+								type="text"
+								InputProps={{ inputProps: { min: 0, max: 9 } }}
+								autoFocus={true}
+								onChange={handleData}
+								onKeyDown={handleKeyDown} 
+							/>
+						}
+						{ confirmationMode && <TextField 
 							variant="outlined" 
 							style={{marginBottom: 70, marginTop: 50, width: 200 }} 
 							type="text"
 							InputProps={{ inputProps: { min: 0, max: 9 } }}
 							autoFocus={true}
-							onChange={handleData}
-							onKeyDown={handleKeyDown} 
-						/>
+							onChange={ handleCorfirmationModeData}
+						/>}
 						{err && <p style={{color: "red"}}> {err} </p> }	
 						<br />		
-						<Button variant="contained" color="primary" onClick={() => executesSearch()}>
-							Realizar operación
-						</Button>
+						{/*	
+							<Button variant="contained" color="primary" onClick={() => executesSearch()}>
+								Realizar operación
+							</Button>
+						*/}	
 					</CardSelect>
 				</div>
 			</div>
