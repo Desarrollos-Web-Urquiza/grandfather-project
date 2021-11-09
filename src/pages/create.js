@@ -45,7 +45,7 @@ const Create = props => {
 			<Helmet>
 				<title>Grandfather project - Alta</title>
 			</Helmet>
-			<h1 align="center" style={{marginRight: 5}}>Alta</h1>
+			<h2 align="center" style={{marginRight: 5}}>ALUMNADO - ALTAS</h2>
 			<div  align="center" style={{marginTop: 150}}>
 				<div className="card-container">	
 					<CardSelect style={{  paddingTop: 10, paddingBottom: 20 }} >
@@ -60,9 +60,9 @@ const Create = props => {
 						<DataInput field="Nombre" setData={setData} type={"text"} name={"name"} state={data} setErr={setErr} submit={validationData}/>
 						{err && <p style={{color: "red"}}> {err} </p> }	
 						<br />		
-						<Button style={{marginTop: 60, marginLeft: 10 }} variant="contained" color="primary" onClick={() => validationData()}>
+						{/* <Button style={{marginTop: 60, marginLeft: 10 }} variant="contained" color="primary" onClick={() => validationData()}>
 							Crear alumno
-						</Button>
+						</Button> */}
 					</CardSelect>
 				</div>
 			</div>

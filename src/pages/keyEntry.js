@@ -65,10 +65,22 @@ const KeyEntry = props => {
 	const handleCorfirmationModeData = (e) =>	{
 		console.log(e.target.value)
 		let confirmationData = e.target.value
+		if(isNaN(parseInt(confirmationData)) && confirmationData != "")	{
+			setErr("Error: No puede ingresar letras. Debe ingresar un número")
+			e.target.value = ""
+			return
+		}
+		if((confirmationData < 1 || confirmationData > 3) && e.target.value != "")	{
+			setErr("Error: Debe ingresar un número del 1 a 3")
+			e.target.value = ""
+			return
+		}	
 		if(confirmationData == "1")
 			executesSearch()
-		if(confirmationData == "2")
+		if(confirmationData == "2"){
+			setDNI("")
 			setConfirmationMode(false)
+		}
 		if(confirmationData == "3")
 			props.history.push('/')
 
@@ -84,11 +96,7 @@ const KeyEntry = props => {
 		if(parseInt(operationNumber) === 1){
 			if(parseInt(directSearchResult) === 0){
 				console.log('Alumno no encontrado')
-				if(DNI !== null && DNI !== '' ){
-					props.history.push('/alumnoAlta/' + DNI)
-				} else	{
-					setErr('Debe ingresar un DNI')
-				}
+				props.history.push('/alumnoAlta/' + DNI)
 			} else if(parseInt(directSearchResult) === 1){
 				console.log('Alumno sí encontrado')
 				setErr('Error: El DNI ingresado ya existe. No lo puede volver a crear')
@@ -99,7 +107,14 @@ const KeyEntry = props => {
 	const handleKeyDown = (event) => {
 		if (event.key === 'Enter') {
 			//executesSearch()
-			setConfirmationMode(true)
+			console.log(DNI)
+			console.log(typeof(DNI))
+			if(DNI !== null && DNI !== ''){
+				console.log(DNI)
+				setConfirmationMode(true)
+			} else	{
+				setErr('Debe ingresar un DNI')
+			}
 		}
 	}
 	
@@ -144,7 +159,7 @@ const KeyEntry = props => {
 							autoFocus={true}
 							onChange={ handleCorfirmationModeData}
 						/>}
-						{err && <p style={{color: "red"}}> {err} </p> }	
+						{err && <b><p style={{color: "red"}}> {err} </p></b> }	
 						<br />		
 						{/*	
 							<Button variant="contained" color="primary" onClick={() => executesSearch()}>
