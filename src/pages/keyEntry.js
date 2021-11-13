@@ -6,7 +6,6 @@ import { Helmet } from "react-helmet";
 import Card from '@material-ui/core/Card';
 import { grey } from '@material-ui/core/colors';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { search } from "../db/functions/dbUtils";
 
@@ -53,12 +52,16 @@ const KeyEntry = props => {
 
 	const handleData = (e) =>	{
 		setErr(false)
-		if(isNaN(parseInt(e.target.value)) && e.target.value != "")	{
-			setErr("Error: No puede ingresar letras. Debe ingresar un número")
-			setDNI("")
-			e.target.value = ""
-			return
-		}
+		let dataToEvaluate = e.target.value
+		dataToEvaluate = dataToEvaluate.split('')
+		dataToEvaluate.map((letter) => {
+			if(isNaN(parseInt(letter)) && e.target.value != "")	{
+				setErr("Error: No puede ingresar letras. Debe ingresar un número")
+				setDNI("")
+				e.target.value = ""
+				return
+			}
+		})
 		let DNI = parseInt(e.target.value)
 		setDNI(DNI)
 	}
@@ -102,13 +105,22 @@ const KeyEntry = props => {
 				setErr('Error: El DNI ingresado ya existe. No lo puede volver a crear')
 			}
 		}
+		//Modificaciones
+		// if(parseInt(operationNumber) === 2){
+		// }
+		//Bajas
+		// if(parseInt(operationNumber) === 3){
+		// }
 	}
 
 	const handleKeyDown = (event) => {
 		if (event.key === 'Enter') {
-			//executesSearch()
-			console.log(DNI)
-			console.log(typeof(DNI))
+			if(event.target.value.length !== 8)	{
+				setErr("Error: El DNI debe tener obligatoriamente 8 caracteres")
+				setDNI("")
+				event.target.value = ""
+				return
+			}
 			if(DNI !== null && DNI !== ''){
 				console.log(DNI)
 				setConfirmationMode(true)
@@ -118,8 +130,6 @@ const KeyEntry = props => {
 		}
 	}
 	
-	console.log(searchResult)
-	
 	return(
 		<div align="center" className="mainCenter">
 			<Helmet>
@@ -128,11 +138,11 @@ const KeyEntry = props => {
 			<h2 style={{marginLeft: 5}}>ALUMNADO - {operationType}</h2>
 			<div style={{marginTop: 150}}>
 				<div className="card-container">
-					<CardSelect style={{  paddingTop: 10, paddingBottom: 20 }} >
+					<CardSelect style={{  paddingTop: 10, paddingBottom: 20 }}>
 						{ !confirmationMode &&<h2 >Ingrese DNI de alumno</h2> }
 						{ confirmationMode && 
 							<div>
-								<h2 >DNI ingresado: {DNI} </h2>
+								<h2>DNI ingresado: {DNI} </h2>
 								<div id="div-options" align="left" className="flex flex-col justify-initial w-56">
 									<p>1 Datos correctos, continuar</p>
 									<p>2 Datos incorrectos, corregir</p>
@@ -143,9 +153,9 @@ const KeyEntry = props => {
 						{ !confirmationMode && 
 							<TextField 
 								variant="outlined" 
-								style={{marginBottom: 70, marginTop: 50, width: 200 }} 
+								style={{marginBottom: 70, marginTop: 50, width: 200}} 
 								type="text"
-								InputProps={{ inputProps: { min: 0, max: 9 } }}
+								InputProps={{inputProps: { min: 0, max: 9 }}}
 								autoFocus={true}
 								onChange={handleData}
 								onKeyDown={handleKeyDown} 
@@ -153,19 +163,14 @@ const KeyEntry = props => {
 						}
 						{ confirmationMode && <TextField 
 							variant="outlined" 
-							style={{marginBottom: 70, marginTop: 50, width: 200 }} 
+							style={{marginBottom: 70, marginTop: 50, width: 200}} 
 							type="text"
 							InputProps={{ inputProps: { min: 0, max: 9 } }}
 							autoFocus={true}
-							onChange={ handleCorfirmationModeData}
+							onChange={handleCorfirmationModeData}
 						/>}
 						{err && <b><p style={{color: "red"}}> {err} </p></b> }	
 						<br />		
-						{/*	
-							<Button variant="contained" color="primary" onClick={() => executesSearch()}>
-								Realizar operación
-							</Button>
-						*/}	
 					</CardSelect>
 				</div>
 			</div>

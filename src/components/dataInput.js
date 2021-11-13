@@ -8,6 +8,18 @@ const DataInput =  (props) => {
 		console.log(e.target.name)
 		console.log(props.setData)
 		props.setData({ ...props.state, [e.target.name]: e.target.value})
+        window.addEventListener('keydown', (e) => {
+            console.log(e)
+          })
+          window.dispatchEvent(new KeyboardEvent('keydown', {
+            key: "e",
+            keyCode: 69,
+            code: "KeyE",
+            which: 69,
+            shiftKey: false,
+            ctrlKey: false,
+            metaKey: false
+          }));
 	}
     const handleKeyDown = (event) => {
 		if (event.key === 'Enter') {

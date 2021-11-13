@@ -6,7 +6,6 @@ import { Helmet } from "react-helmet";
 import Card from '@material-ui/core/Card';
 import { grey } from '@material-ui/core/colors';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
 const CardSelect = withStyles((theme) => ({
@@ -21,15 +20,13 @@ const CardSelect = withStyles((theme) => ({
 
 const Home = props => {
 
-	const [err, setErr] = useState(false);
+	const [err, setErr] = useState(false)
 
 	const handleData = (e) =>	{
 		setErr(false)
-		console.log(e.target.value)
 		let operationNumber = e.target.value
 		if(isNaN(parseInt(operationNumber)) && operationNumber != "")	{
 			setErr("Error: No puede ingresar letras. Debe ingresar un número")
-		
 			e.target.value = ""
 			return
 		}
@@ -43,20 +40,13 @@ const Home = props => {
 	}
 	
 	const redirection = (data) =>	{
-		if(!err){
-			if(data == ""){
-				setErr("Error: Los datos están vacíos")
-			}	else {
-				props.history.push('/ingresoClave/' + data)
-			}
+		if(data == ""){
+			setErr("Error: Los datos están vacíos")
+		}	else {
+			console.log("Entró al segundo else")
+			props.history.push('/ingresoClave/' + data)
 		}
 	}
-
-	/*const handleKeyDown = (event) => {
-		if (event.key === 'Enter') {
-			redirection()
-		}
-	}*/
 
 	return(
 		<div className="mainCenter">
