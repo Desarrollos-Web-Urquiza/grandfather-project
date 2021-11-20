@@ -1,4 +1,5 @@
 import TextField from '@material-ui/core/TextField';
+import { ThemeProvider, createTheme } from '@material-ui/core/styles'
 
 const DataInput =  (props) => {
     //filter input
@@ -21,22 +22,37 @@ const DataInput =  (props) => {
             metaKey: false
           }));
 	}
+    
     const handleKeyDown = (event) => {
 		if (event.key === 'Enter') {
 			props.submit()
 		}
 	}
+
+        
+    const theme = createTheme({
+        typography: {
+            TextField: {
+            fontSize: '10rem',
+        },
+        },
+    });
+
     return(
         <div align="left" className="box-input">
             <h3 className="text-2xl">{props.field}:</h3>
-            <div className="-mt-1 ml-4 mb-8" >
-                <TextField 
-                    name={props.name}
-                    onChange={handleData}
-                    type={props.type}
-                    autoFocus={props.autoFocus}
-                    onKeyDown={handleKeyDown} 
-                />
+            <div className="-mt-2 ml-4 mb-8 text-2xl" >
+                <ThemeProvider theme={theme}>
+                    <TextField 
+                        variant="outlined"
+                        name={props.name}
+                        onChange={handleData}
+                        type={props.type}
+                        autoFocus={props.autoFocus}
+                        onKeyDown={handleKeyDown} 
+                        className="text-2xl w-80"
+                    />
+                </ThemeProvider>
             </div>
         </div>
     )

@@ -10,7 +10,7 @@ import DataInput from "../components/dataInput";
 const CardSelect = withStyles((theme) => ({
   root: {
     backgroundColor: grey[100],
-    width: 400,
+    width: 480,
     '&:hover': {
       backgroundColor: grey[100],
     },
@@ -54,10 +54,10 @@ const Create = props => {
 						<br />		
 						<div align="left" className="flex flex-wrap justify-initial -mt-1 ml-2 mb-8 text-2xl">
 							<p>DNI: </p> 
-							<p className="ml-28">{data.DNI} </p>
+							<p className="ml-20 mt-1 text-base">{data.DNI} </p>
 						</div>
-						<DataInput field="Apellido" setData={setData} type={"text"} name={"surname"} state={data} setErr={setErr} autoFocus={true} submit={validationData} />
-						<DataInput field="Nombre" setData={setData} type={"text"} name={"name"} state={data} setErr={setErr} submit={validationData}/>
+						<DataInput field="Apellido/s" setData={setData} type={"text"} name={"surname"} state={data} setErr={setErr} autoFocus={true} submit={validationData} />
+						<DataInput field="Nombre/s" setData={setData} type={"text"} name={"name"} state={data} setErr={setErr} submit={validationData}/>
 						{err && <p style={{color: "red"}}> {err} </p> }	
 						<br />		
 						{/* <Button style={{marginTop: 60, marginLeft: 10 }} variant="contained" color="primary" onClick={() => validationData()}>
