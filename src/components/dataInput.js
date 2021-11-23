@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { ThemeProvider, createTheme } from '@material-ui/core/styles'
 
@@ -9,26 +10,35 @@ const DataInput =  (props) => {
 		console.log(e.target.name)
 		console.log(props.setData)
 		props.setData({ ...props.state, [e.target.name]: e.target.value})
-        window.addEventListener('keydown', (e) => {
-            console.log(e)
-          })
-          window.dispatchEvent(new KeyboardEvent('keydown', {
-            key: "e",
-            keyCode: 69,
-            code: "KeyE",
-            which: 69,
-            shiftKey: false,
-            ctrlKey: false,
-            metaKey: false
-          }));
-	}
-    
-    const handleKeyDown = (event) => {
-		if (event.key === 'Enter') {
-			props.submit()
-		}
+        // window.dispatchEvent(new KeyboardEvent('keydown', {
+        //     key: "e",
+        //     keyCode: 69,
+        //     code: "KeyE",
+        //     which: 69,
+        //     shiftKey: false,
+        //     ctrlKey: false,
+        //     metaKey: false
+        // }));
 	}
 
+    
+    const handleKeyDown = (event) => {
+		// if (event.key === 'Enter') {
+		// 	props.submit()
+		// }
+
+        if (event.key === 'Enter') {
+			// props.inputRef.current.focus();
+            if(props.id == "surname"){
+                props.document.getElementById("name").focus();
+            }
+            if(props.id == "name"){
+                props.submit()
+            }
+		}
+	}
+    
+    const inputRef = useRef(null);
         
     const theme = createTheme({
         typography: {
@@ -44,6 +54,7 @@ const DataInput =  (props) => {
             <div className="-mt-2 ml-4 mb-8 text-2xl" >
                 <ThemeProvider theme={theme}>
                     <TextField 
+                        id={props.id}
                         variant="outlined"
                         name={props.name}
                         onChange={handleData}
@@ -51,6 +62,7 @@ const DataInput =  (props) => {
                         autoFocus={props.autoFocus}
                         onKeyDown={handleKeyDown} 
                         className="text-2xl w-80"
+                        
                     />
                 </ThemeProvider>
             </div>

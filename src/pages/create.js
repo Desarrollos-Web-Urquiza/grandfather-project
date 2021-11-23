@@ -3,9 +3,10 @@ import { Helmet } from "react-helmet";
 import Card from '@material-ui/core/Card';
 import { grey } from '@material-ui/core/colors';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import { add } from "../db/functions/dbUtils";
 import DataInput from "../components/dataInput";
+import TextField from '@material-ui/core/TextField';
+import { useRef } from 'react';
 
 const CardSelect = withStyles((theme) => ({
   root: {
@@ -31,14 +32,37 @@ const Create = props => {
 	const validationData = () => {
 		if(data.surname === '' || typeof(data.surname) == 'undefined'){
 			setErr('Ingrese un apellido')
+			document.getElementById("surname").focus();
+			return
+		}	
+		if(data.surname.length > 30){
+			setErr('El apellido no puede tener más de 30 caracteres')
 			return
 		}
 		if(data.name === '' || typeof(data.name) == 'undefined'){
 			setErr('Ingrese un nombre')
 			return
 		}
+		if(data.name.length > 30){
+			setErr('El nombre no puede tener más de 30 caracteres')
+			return
+		}
 		add(data, props.history)
 	}
+
+	const handleKeyDown = (event) => {
+		// if (event.key === 'Enter') {
+		// 	props.submit()
+		// }
+
+        if (event.key === 'Enter') {
+			document.getElementById("input2").focus();
+			console.log(inputRef)
+			console.log(document.getElementById("input2"))
+		}
+	}
+
+	const inputRef = useRef(null);
 
 	return(
 		<div className="mainCenter">
@@ -56,13 +80,30 @@ const Create = props => {
 							<p>DNI: </p> 
 							<p className="ml-20 mt-1 text-base">{data.DNI} </p>
 						</div>
-						<DataInput field="Apellido/s" setData={setData} type={"text"} name={"surname"} state={data} setErr={setErr} autoFocus={true} submit={validationData} />
-						<DataInput field="Nombre/s" setData={setData} type={"text"} name={"name"} state={data} setErr={setErr} submit={validationData}/>
+						<DataInput 
+							id="surname"
+							field="Apellido/s" 
+							setData={setData} 
+							type={"text"} 
+							name={"surname"} 
+							state={data} 
+							setErr={setErr} 
+							autoFocus={true} 
+							submit={validationData} 
+							document={document}
+						/>
+						<DataInput 
+							id="name"
+							field="Nombre/s" 
+							setData={setData} 
+							type={"text"} 
+							name={"name"} 
+							state={data} 
+							setErr={setErr} 
+							submit={validationData} 
+						/>
 						{err && <p style={{color: "red"}}> {err} </p> }	
 						<br />		
-						{/* <Button style={{marginTop: 60, marginLeft: 10 }} variant="contained" color="primary" onClick={() => validationData()}>
-							Crear alumno
-						</Button> */}
 					</CardSelect>
 				</div>
 			</div>
