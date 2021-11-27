@@ -5,13 +5,11 @@ import { grey } from '@material-ui/core/colors';
 import { withStyles } from '@material-ui/core/styles';
 import { add } from "../db/functions/dbUtils";
 import DataInput from "../components/dataInput";
-import TextField from '@material-ui/core/TextField';
-import { useRef } from 'react';
 
 const CardSelect = withStyles((theme) => ({
   root: {
     backgroundColor: grey[100],
-    width: 480,
+    width: 600,
     '&:hover': {
       backgroundColor: grey[100],
     },
@@ -35,34 +33,12 @@ const Create = props => {
 			document.getElementById("surname").focus();
 			return
 		}	
-		if(data.surname.length > 30){
-			setErr('El apellido no puede tener más de 30 caracteres')
-			return
-		}
 		if(data.name === '' || typeof(data.name) == 'undefined'){
 			setErr('Ingrese un nombre')
 			return
 		}
-		if(data.name.length > 30){
-			setErr('El nombre no puede tener más de 30 caracteres')
-			return
-		}
 		add(data, props.history)
 	}
-
-	const handleKeyDown = (event) => {
-		// if (event.key === 'Enter') {
-		// 	props.submit()
-		// }
-
-        if (event.key === 'Enter') {
-			document.getElementById("input2").focus();
-			console.log(inputRef)
-			console.log(document.getElementById("input2"))
-		}
-	}
-
-	const inputRef = useRef(null);
 
 	return(
 		<div className="mainCenter">
@@ -77,8 +53,8 @@ const Create = props => {
 						<br />
 						<br />		
 						<div align="left" className="flex flex-wrap justify-initial -mt-1 ml-2 mb-8 text-2xl">
-							<p>DNI: </p> 
-							<p className="ml-20 mt-1 text-base">{data.DNI} </p>
+							<p >DNI: </p> 
+							<p className="mt-1" style={{fontSize: '1.3rem', marginLeft: "6rem"}}>{data.DNI} </p>
 						</div>
 						<DataInput 
 							id="surname"
@@ -102,7 +78,7 @@ const Create = props => {
 							setErr={setErr} 
 							submit={validationData} 
 						/>
-						{err && <p style={{color: "red"}}> {err} </p> }	
+						{err && <b><p style={{color: "red"}}> {err} </p></b> }	
 						<br />		
 					</CardSelect>
 				</div>

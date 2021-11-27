@@ -20,6 +20,9 @@
   #div-options p{
     @apply mt-4;
   }
+  .w-85{
+    width: 21rem;
+  }
 }
 
 body {

@@ -1,34 +1,22 @@
-import { useRef } from 'react';
 import TextField from '@material-ui/core/TextField';
-import { ThemeProvider, createTheme } from '@material-ui/core/styles'
 
 const DataInput =  (props) => {
     //filter input
     const handleData = (e) =>	{
         props.setErr(false)
-		console.log(e.target.value)
-		console.log(e.target.name)
-		console.log(props.setData)
 		props.setData({ ...props.state, [e.target.name]: e.target.value})
-        // window.dispatchEvent(new KeyboardEvent('keydown', {
-        //     key: "e",
-        //     keyCode: 69,
-        //     code: "KeyE",
-        //     which: 69,
-        //     shiftKey: false,
-        //     ctrlKey: false,
-        //     metaKey: false
-        // }));
+        if(e.target.value.length === 31 && props.id === "surname"){
+            e.target.value = e.target.value.substring(0, e.target.value.length - 1)
+            props.setErr('El apellido no puede tener más de 30 caracteres')
+        }
+        if(e.target.value.length === 31 && props.id === "name"){
+            e.target.value = e.target.value.substring(0, e.target.value.length - 1)
+            props.setErr('El nombre no puede tener más de 30 caracteres')
+        }
 	}
 
-    
     const handleKeyDown = (event) => {
-		// if (event.key === 'Enter') {
-		// 	props.submit()
-		// }
-
         if (event.key === 'Enter') {
-			// props.inputRef.current.focus();
             if(props.id == "surname"){
                 props.document.getElementById("name").focus();
             }
@@ -37,22 +25,11 @@ const DataInput =  (props) => {
             }
 		}
 	}
-    
-    const inputRef = useRef(null);
-        
-    const theme = createTheme({
-        typography: {
-            TextField: {
-            fontSize: '10rem',
-        },
-        },
-    });
-
+   
     return(
         <div align="left" className="box-input">
             <h3 className="text-2xl">{props.field}:</h3>
-            <div className="-mt-2 ml-4 mb-8 text-2xl" >
-                <ThemeProvider theme={theme}>
+            <div className="-mt-3 ml-4 mb-8 text-7xl" >
                     <TextField 
                         id={props.id}
                         variant="outlined"
@@ -61,10 +38,12 @@ const DataInput =  (props) => {
                         type={props.type}
                         autoFocus={props.autoFocus}
                         onKeyDown={handleKeyDown} 
-                        className="text-2xl w-80"
-                        
+                        className="w-85"
+                        InputProps={{
+                            style: {fontSize: '1.3rem'},
+                            inputProps: { maxLength: 31 }
+                        }}
                     />
-                </ThemeProvider>
             </div>
         </div>
     )
