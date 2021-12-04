@@ -5,45 +5,82 @@ const DataInput =  (props) => {
     const handleData = (e) =>	{
         props.setErr(false)
 		props.setData({ ...props.state, [e.target.name]: e.target.value})
-        if(e.target.value.length === 31 && props.id === "surname"){
-            e.target.value = e.target.value.substring(0, e.target.value.length - 1)
-            props.setErr('El apellido no puede tener más de 30 caracteres')
-        }
-        if(e.target.value.length === 31 && props.id === "name"){
-            e.target.value = e.target.value.substring(0, e.target.value.length - 1)
-            props.setErr('El nombre no puede tener más de 30 caracteres')
-        }
 	}
 
     const handleKeyDown = (event) => {
-        if (event.key === 'Enter') {
+        props.setErr(false)
+        if(event.key === 'Enter') {
             if(props.id == "surname"){
-                props.document.getElementById("name").focus();
+                //verifying characters allowed
+                if(evaluateCharacters(event.target.value))
+                    props.document.getElementById("name").focus();
             }
             if(props.id == "name"){
-                props.submit()
+                //verifying characters allowed
+                if(evaluateCharacters(event.target.value))
+                    props.submit()
             }
 		}
+        if(
+            (
+                event.key !== 'Enter' && 
+                event.key !== 'Alt' && 
+                event.key !== 'Tab' && 
+                event.key !== 'Shift' && 
+                event.key !== 'Control' && 
+                event.keyCode !== 37  && 
+                event.keyCode !== 38  &&  
+                event.keyCode !== 39  && 
+                event.keyCode !== 40  && 
+                event.target.value.length === 30 
+            ) 
+            && 
+            (props.id === "surname" || props.id === "name")
+        ) {
+            props.setErr(`El ${props.name} no puede tener más de 30 caracteres`)
+		}        
+	}
+
+    const evaluateCharacters = (dataToEvaluate) =>	{
+        let allowedCharacters = ["q","w","e","r","t","y","u","ü","i","o","p","a","s","d","f","g","h","j","k","l","ñ","z","x","c","v","b","n","m","á","é","í","ó","ú"," ","'","-"]
+        
+        for (let index = 0; index < dataToEvaluate.length; index++) {
+            let validations = allowedCharacters.map((allowedLetter) => {
+                if(dataToEvaluate.charAt(index).toLowerCase() ===  allowedLetter){
+                    return true
+                } else {
+                    return false
+                }
+            })
+
+            let coincidence = validations.some(a => a === true);
+
+            if(!coincidence){
+                props.setErr('Ingresó al menos un caracter no permitido')
+                return false
+            }
+        }
+        return true
 	}
    
     return(
         <div align="left" className="box-input">
             <h3 className="text-2xl">{props.field}:</h3>
             <div className="-mt-3 ml-4 mb-8 text-7xl" >
-                    <TextField 
-                        id={props.id}
-                        variant="outlined"
-                        name={props.name}
-                        onChange={handleData}
-                        type={props.type}
-                        autoFocus={props.autoFocus}
-                        onKeyDown={handleKeyDown} 
-                        className="w-85"
-                        InputProps={{
-                            style: {fontSize: '1.3rem'},
-                            inputProps: { maxLength: 31 }
-                        }}
-                    />
+                <TextField 
+                    id={props.id}
+                    variant="outlined"
+                    name={props.name}
+                    onChange={handleData}
+                    type={props.type}
+                    autoFocus={props.autoFocus}
+                    onKeyDown={handleKeyDown} 
+                    className="w-85"
+                    InputProps={{
+                        style: {fontSize: '1.3rem'},
+                        inputProps: { maxLength: 30 }
+                    }}
+                />
             </div>
         </div>
     )

@@ -48,7 +48,7 @@ const Create = props => {
 			<h2 align="center" style={{marginRight: 5}}>ALUMNADO - ALTAS</h2>
 			<div  align="center" style={{marginTop: 150}}>
 				<div className="card-container">	
-					<CardSelect style={{  paddingTop: 10, paddingBottom: 20 }} >
+					<CardSelect style={{  paddingTop: 10, paddingBottom: 20 }}>
 						<h2 style={{marginTop: 15}}>Crear alumno</h2>
 						<br />
 						<br />		
@@ -61,7 +61,7 @@ const Create = props => {
 							field="Apellido/s" 
 							setData={setData} 
 							type={"text"} 
-							name={"surname"} 
+							name={"apellido"} 
 							state={data} 
 							setErr={setErr} 
 							autoFocus={true} 
@@ -73,7 +73,7 @@ const Create = props => {
 							field="Nombre/s" 
 							setData={setData} 
 							type={"text"} 
-							name={"name"} 
+							name={"nombre"} 
 							state={data} 
 							setErr={setErr} 
 							submit={validationData} 
