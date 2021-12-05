@@ -4,7 +4,7 @@ const DataInput =  (props) => {
     //filter input
     const handleData = (e) =>	{
         props.setErr(false)
-		props.setData({ ...props.state, [e.target.name]: e.target.value})
+		props.setData({ ...props.state, [e.target.id]: e.target.value})
 	}
 
     const handleKeyDown = (event) => {
@@ -17,7 +17,7 @@ const DataInput =  (props) => {
             }
             if(props.id == "name"){
                 //verifying characters allowed
-                if(evaluateCharacters(event.target.value))
+                if(evaluateCharacters(event.target.value) && evaluateCharacters(props.document.getElementById("surname").value))
                     props.submit()
             }
 		}

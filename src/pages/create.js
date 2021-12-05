@@ -77,6 +77,7 @@ const Create = props => {
 							state={data} 
 							setErr={setErr} 
 							submit={validationData} 
+							document={document}
 						/>
 						{err && <b><p style={{color: "red"}}> {err} </p></b> }	
 						<br />		
