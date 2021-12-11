@@ -18,7 +18,17 @@ const DataInput =  (props) => {
             if(props.id == "name"){
                 //verifying characters allowed
                 if(evaluateCharacters(event.target.value) && evaluateCharacters(props.document.getElementById("surname").value))
-                    props.submit()
+                    props.document.getElementById("domicile").focus()
+                    // props.submit()
+            }
+            if(props.id == "domicile"){
+                props.document.getElementById("location").focus()
+            }
+            if(props.id == "location"){
+                props.document.getElementById("birthday").focus()
+            }
+            if(props.id == "birthday"){
+                props.submit()
             }
 		}
         if(

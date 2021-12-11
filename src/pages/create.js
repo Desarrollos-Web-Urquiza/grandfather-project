@@ -37,9 +37,17 @@ const Create = props => {
 			setErr('Ingrese un nombre')
 			return
 		}
+		if(data.name === '' || typeof(data.name) == 'undefined'){
+			setErr('Ingrese un nombre')
+			return
+		}
+		if(data.name === '' || typeof(data.name) == 'undefined'){
+			setErr('Ingrese un nombre')
+			return
+		}
 		add(data, props.history)
 	}
-
+	console.log(data)
 	return(
 		<div className="mainCenter">
 			<Helmet>
@@ -74,6 +82,39 @@ const Create = props => {
 							setData={setData} 
 							type={"text"} 
 							name={"nombre"} 
+							state={data} 
+							setErr={setErr} 
+							submit={validationData} 
+							document={document}
+						/>
+						<DataInput 
+							id="domicile"
+							field="Domicilio" 
+							setData={setData} 
+							type={"text"} 
+							name={"domicilio"} 
+							state={data} 
+							setErr={setErr} 
+							submit={validationData} 
+							document={document}
+						/>
+						<DataInput 
+							id="location"
+							field="Localidad" 
+							setData={setData} 
+							type={"text"} 
+							name={"localidad"} 
+							state={data} 
+							setErr={setErr} 
+							submit={validationData} 
+							document={document}
+						/>
+						<DataInput 
+							id="birthday"
+							field="Fecha de nacimiento" 
+							setData={setData} 
+							type={"date"} 
+							name={"fecha de nacimiento"} 
 							state={data} 
 							setErr={setErr} 
 							submit={validationData} 
