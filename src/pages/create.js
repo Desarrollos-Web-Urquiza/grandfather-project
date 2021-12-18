@@ -9,7 +9,7 @@ import DataInput from "../components/dataInput";
 const CardSelect = withStyles((theme) => ({
   root: {
     backgroundColor: grey[100],
-    width: 600,
+    width: 650,
     '&:hover': {
       backgroundColor: grey[100],
     },
@@ -37,9 +37,17 @@ const Create = props => {
 			setErr('Ingrese un nombre')
 			return
 		}
+		if(data.name === '' || typeof(data.name) == 'undefined'){
+			setErr('Ingrese un nombre')
+			return
+		}
+		if(data.name === '' || typeof(data.name) == 'undefined'){
+			setErr('Ingrese un nombre')
+			return
+		}
 		add(data, props.history)
 	}
-
+	console.log(data)
 	return(
 		<div className="mainCenter">
 			<Helmet>
@@ -52,7 +60,7 @@ const Create = props => {
 						<h2 style={{marginTop: 15}}>Crear alumno</h2>
 						<br />
 						<br />		
-						<div align="left" className="flex flex-wrap justify-initial -mt-1 ml-2 mb-8 text-2xl">
+						<div align="left" className="-mt-1 ml-2 mb-8 text-2xl box-input2">
 							<p >DNI: </p> 
 							<p className="mt-1" style={{fontSize: '1.3rem', marginLeft: "6rem"}}>{data.DNI} </p>
 						</div>
@@ -74,6 +82,39 @@ const Create = props => {
 							setData={setData} 
 							type={"text"} 
 							name={"nombre"} 
+							state={data} 
+							setErr={setErr} 
+							submit={validationData} 
+							document={document}
+						/>
+						<DataInput 
+							id="domicile"
+							field="Domicilio" 
+							setData={setData} 
+							type={"text"} 
+							name={"domicilio"} 
+							state={data} 
+							setErr={setErr} 
+							submit={validationData} 
+							document={document}
+						/>
+						<DataInput 
+							id="location"
+							field="Localidad" 
+							setData={setData} 
+							type={"text"} 
+							name={"localidad"} 
+							state={data} 
+							setErr={setErr} 
+							submit={validationData} 
+							document={document}
+						/>
+						<DataInput 
+							id="birthday"
+							field="Fecha de nacimiento" 
+							setData={setData} 
+							type={"date"} 
+							name={"fecha de nacimiento"} 
 							state={data} 
 							setErr={setErr} 
 							submit={validationData} 
