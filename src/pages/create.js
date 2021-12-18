@@ -9,7 +9,7 @@ import DataInput from "../components/dataInput";
 const CardSelect = withStyles((theme) => ({
   root: {
     backgroundColor: grey[100],
-    width: 600,
+    width: 650,
     '&:hover': {
       backgroundColor: grey[100],
     },
@@ -60,7 +60,7 @@ const Create = props => {
 						<h2 style={{marginTop: 15}}>Crear alumno</h2>
 						<br />
 						<br />		
-						<div align="left" className="flex flex-wrap justify-initial -mt-1 ml-2 mb-8 text-2xl">
+						<div align="left" className="-mt-1 ml-2 mb-8 text-2xl box-input2">
 							<p >DNI: </p> 
 							<p className="mt-1" style={{fontSize: '1.3rem', marginLeft: "6rem"}}>{data.DNI} </p>
 						</div>

@@ -5,7 +5,10 @@ export const add = async (data, redirect) => {
         student:{ 
             DNI: parseInt(data.DNI),
             name: data.name,
-            surname: data.surname
+            surname: data.surname,
+            location: data.location,
+            birthday: data.birthday,
+            domicile: data.domicile
         }
     })
     .then(function() {
