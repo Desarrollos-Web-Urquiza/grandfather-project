@@ -86,11 +86,13 @@ const DataInput =  (props) => {
                     type={props.type}
                     autoFocus={props.autoFocus}
                     onKeyDown={handleKeyDown} 
+                    value={ (props.name === "DNI del tutor/a" || props.name === "Apellido del tutor/a") ? "-" : props.state[props.id]}
                     className="w-85"
                     InputProps={{
                         style: {fontSize: '1.3rem'},
                         inputProps: { maxLength: 30 }
                     }}
+                    disabled={props.disabled ? true : false}
                 />
             </div>
         </div>

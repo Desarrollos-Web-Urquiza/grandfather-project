@@ -31,21 +31,45 @@ const Create = props => {
 	},[]);
 
 	const validationData = () => {
+		console.log(data)
 		if(data.surname === '' || typeof(data.surname) == 'undefined'){
 			setErr('Ingrese un apellido')
-			document.getElementById("surname").focus();
+			setConfirmationMode(false)
+			setTimeout(() => {
+				document.getElementById("surname").focus()
+			}, 300);
 			return
 		}	
 		if(data.name === '' || typeof(data.name) == 'undefined'){
 			setErr('Ingrese un nombre')
+			setConfirmationMode(false)
+			setTimeout(() => {
+				document.getElementById("name").focus()
+			}, 300);
 			return
 		}
-		if(data.name === '' || typeof(data.name) == 'undefined'){
-			setErr('Ingrese un nombre')
+		if(data.domicile === '' || typeof(data.domicile) == 'undefined'){
+			setErr('Ingrese un domicilio')
+			setConfirmationMode(false)
+			setTimeout(() => {
+				document.getElementById("domicile").focus()
+			}, 300);
 			return
 		}
-		if(data.name === '' || typeof(data.name) == 'undefined'){
-			setErr('Ingrese un nombre')
+		if(data.location === '' || typeof(data.location) == 'undefined'){
+			setErr('Ingrese un localidad')
+			setConfirmationMode(false)
+			setTimeout(() => {
+				document.getElementById("location").focus()
+			}, 300);
+			return
+		}
+		if(data.birthday === '' || typeof(data.birthday) == 'undefined'){
+			setErr('Ingrese una fecha de nacimiento')
+			setConfirmationMode(false)
+			setTimeout(() => {
+				document.getElementById("birthday").focus()
+			}, 300);
 			return
 		}
 		add(data, props.history)
@@ -79,24 +103,21 @@ const Create = props => {
 		
 		if(definition.target.value == 3){
 			setCorrectionMode(false)
-			console.log(document.getElementById("domicile"))
-				setTimeout(() => {
+			setTimeout(() => {
 				document.getElementById("domicile").focus()
 			}, 300);
 		}
 		
 		if(definition.target.value == 4){
 			setCorrectionMode(false)
-			console.log(document.getElementById("location"))
-				setTimeout(() => {
+			setTimeout(() => {
 				document.getElementById("location").focus()
 			}, 300);
 		}
 		
 		if(definition.target.value == 5){
 			setCorrectionMode(false)
-			console.log(document.getElementById("birthday"))
-				setTimeout(() => {
+			setTimeout(() => {
 				document.getElementById("birthday").focus()
 			}, 300);
 		}
@@ -114,14 +135,14 @@ const Create = props => {
 					<CardSelect style={{  paddingTop: 10, paddingBottom: 20 }}>
 						{ confirmationMode && 
 							<div>
-								<h2>¿Datos correctos? </h2>
-								<div id="div-options" align="left" className="flex flex-col justify-initial w-56">
+								<h2 className="mr-8">¿Datos correctos? </h2>
+								<div id="div-options" align="left" className="flex flex-col justify-initial w-56 mb-16">
 									<p>1 Datos correctos, continuar</p>
 									<p>2 Datos incorrectos, corregir</p>
 								</div>
 								<TextField 
 									variant="outlined" 
-									style={{marginBottom: 50, width: 200 }} 
+									style={{marginBottom: 50, width: 200, }} 
 									type="text"
 									InputProps={{ inputProps: { min: 0, max: 4 } }}
 									onChange={confirmationDefinition}
@@ -133,7 +154,7 @@ const Create = props => {
 						{ correctionMode && 
 							<div>
 								<h2>¿Qué dato quiere corregir? </h2>
-								<div id="div-options" align="left" className="flex flex-col justify-initial w-56">
+								<div id="div-options" align="left" className="flex flex-col justify-initial w-56 mb-16">
 									<p>1 Apellido/s</p>
 									<p>2 Nombre/s</p>
 									<p>3 Domicilio</p>
@@ -151,7 +172,7 @@ const Create = props => {
 								/>
 							</div>
 						}
-						{ (!confirmationMode && correctionMode !== true) && 
+						{ (!confirmationMode && !correctionMode) && 
 							<div>
 								<h2 style={{marginTop: 15}}>Crear alumno</h2>
 								<br />
@@ -216,6 +237,32 @@ const Create = props => {
 									submit={validationData} 
 									document={document}
 									setConfirmationMode={setConfirmationMode}
+								/>
+								<DataInput 
+									id="DNItutor"
+									field="DNI del tutor/a" 
+									setData={setData} 
+									type={"text"} 
+									name={"DNI del tutor/a"} 
+									state={data} 
+									setErr={setErr} 
+									submit={validationData} 
+									document={document}
+									setConfirmationMode={setConfirmationMode}
+									disabled={true}
+								/>
+								<DataInput 
+									id="surnameTutor"
+									field="Apellido del tutor/a" 
+									setData={setData} 
+									type={"text"} 
+									name={"Apellido del tutor/a"} 
+									state={data} 
+									setErr={setErr} 
+									submit={validationData} 
+									document={document}
+									setConfirmationMode={setConfirmationMode}
+									disabled={true}
 								/>
 							</div>
 						}
