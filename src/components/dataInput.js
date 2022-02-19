@@ -28,7 +28,8 @@ const DataInput =  (props) => {
                 props.document.getElementById("birthday").focus()
             }
             if(props.id == "birthday"){
-                props.submit()
+                props.setConfirmationMode(true)
+                //props.submit()
             }
 		}
         if(
