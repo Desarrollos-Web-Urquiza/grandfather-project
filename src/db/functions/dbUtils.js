@@ -6,9 +6,11 @@ export const add = async (data, redirect) => {
             DNI: parseInt(data.DNI),
             name: data.name,
             surname: data.surname,
+            course: data.course,
             location: data.location,
             birthday: data.birthday,
-            domicile: data.domicile
+            domicile: data.domicile,
+            telephone: data.telephone
         }
     })
     .then(function() {

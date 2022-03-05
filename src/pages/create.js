@@ -48,6 +48,14 @@ const Create = props => {
 			}, 300);
 			return
 		}
+		if(data.course === '' || typeof(data.course) == 'undefined'){
+			setErr('Ingrese un teléfono')
+			setConfirmationMode(false)
+			setTimeout(() => {
+				document.getElementById("course").focus()
+			}, 300);
+			return
+		}
 		if(data.domicile === '' || typeof(data.domicile) == 'undefined'){
 			setErr('Ingrese un domicilio')
 			setConfirmationMode(false)
@@ -69,6 +77,14 @@ const Create = props => {
 			setConfirmationMode(false)
 			setTimeout(() => {
 				document.getElementById("birthday").focus()
+			}, 300);
+			return
+		}
+		if(data.telephone === '' || typeof(data.telephone) == 'undefined'){
+			setErr('Ingrese un teléfono')
+			setConfirmationMode(false)
+			setTimeout(() => {
+				document.getElementById("telephone").focus()
 			}, 300);
 			return
 		}
@@ -100,25 +116,36 @@ const Create = props => {
 				document.getElementById("name").focus()
 			}, 300);
 		}
-		
 		if(definition.target.value == 3){
+			setCorrectionMode(false)
+			setTimeout(() => {
+				document.getElementById("course").focus()
+			}, 300);
+		}
+		if(definition.target.value == 4){
 			setCorrectionMode(false)
 			setTimeout(() => {
 				document.getElementById("domicile").focus()
 			}, 300);
 		}
 		
-		if(definition.target.value == 4){
+		if(definition.target.value == 5){
 			setCorrectionMode(false)
 			setTimeout(() => {
 				document.getElementById("location").focus()
 			}, 300);
 		}
 		
-		if(definition.target.value == 5){
+		if(definition.target.value == 6){
 			setCorrectionMode(false)
 			setTimeout(() => {
 				document.getElementById("birthday").focus()
+			}, 300);
+		}
+		if(definition.target.value == 7){
+			setCorrectionMode(false)
+			setTimeout(() => {
+				document.getElementById("telephone").focus()
 			}, 300);
 		}
 	}
@@ -157,9 +184,11 @@ const Create = props => {
 								<div id="div-options" align="left" className="flex flex-col justify-initial w-56 mb-16">
 									<p>1 Apellido/s</p>
 									<p>2 Nombre/s</p>
-									<p>3 Domicilio</p>
-									<p>4 Localidad</p>
-									<p>5 Fecha de nacimiento</p>
+									<p>3 Curso</p>
+									<p>4 Domicilio</p>
+									<p>5 Localidad</p>
+									<p>6 Fecha de nacimiento</p>
+									<p>7 Teléfono</p>
 								</div>
 								<TextField 
 									variant="outlined" 
@@ -205,6 +234,17 @@ const Create = props => {
 									document={document}
 								/>
 								<DataInput 
+									id="course"
+									field="Curso" 
+									setData={setData} 
+									type={"text"} 
+									name={"curso"} 
+									state={data} 
+									setErr={setErr} 
+									submit={validationData} 
+									document={document}
+								/>
+								<DataInput 
 									id="domicile"
 									field="Domicilio" 
 									setData={setData} 
@@ -232,6 +272,17 @@ const Create = props => {
 									setData={setData} 
 									type={"date"} 
 									name={"fecha de nacimiento"} 
+									state={data} 
+									setErr={setErr} 
+									submit={validationData} 
+									document={document}
+								/>
+								<DataInput 
+									id="telephone"
+									field="Teléfono" 
+									setData={setData} 
+									type={"number"} 
+									name={"telefono"} 
 									state={data} 
 									setErr={setErr} 
 									submit={validationData} 

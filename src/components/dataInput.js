@@ -8,26 +8,34 @@ const DataInput =  (props) => {
 	}
 
     const handleKeyDown = (event) => {
+        let orderOfFields = ["name", "course", "domicile", "location", "birthday", "telephone"]
         props.setErr(false)
         if(event.key === 'Enter') {
             if(props.id == "surname"){
                 //verifying characters allowed
                 if(evaluateCharacters(event.target.value))
-                    props.document.getElementById("name").focus();
+                    props.document.getElementById(orderOfFields[0]).focus();
             }
             if(props.id == "name"){
                 //verifying characters allowed
                 if(evaluateCharacters(event.target.value) && evaluateCharacters(props.document.getElementById("surname").value))
-                    props.document.getElementById("domicile").focus()
+                    props.document.getElementById(orderOfFields[1]).focus()
                     // props.submit()
             }
+            if(props.id == "course"){
+                props.document.getElementById(orderOfFields[2]).focus()
+            }
             if(props.id == "domicile"){
-                props.document.getElementById("location").focus()
+                props.document.getElementById(orderOfFields[3]).focus()
             }
             if(props.id == "location"){
-                props.document.getElementById("birthday").focus()
+                props.document.getElementById(orderOfFields[4]).focus()
             }
             if(props.id == "birthday"){
+                props.document.getElementById(orderOfFields[5]).focus()
+                //props.submit()
+            }
+            if(props.id == "telephone"){
                 props.setConfirmationMode(true)
                 //props.submit()
             }
