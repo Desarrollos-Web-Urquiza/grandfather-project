@@ -8,7 +8,8 @@ const DataInput =  (props) => {
 	}
 
     const handleKeyDown = (event) => {
-        let orderOfFields = ["name", "course", "domicile", "location", "birthday", "telephone"]
+        //array that establishes the order if fields
+        let orderOfFields = ["name", "course", "domicile", "location", "birthday", "telephone", "DNItutor", "surnameTutor", "nameTutor"]
         props.setErr(false)
         if(event.key === 'Enter') {
             if(props.id == "surname"){
@@ -33,11 +34,20 @@ const DataInput =  (props) => {
             }
             if(props.id == "birthday"){
                 props.document.getElementById(orderOfFields[5]).focus()
-                //props.submit()
             }
             if(props.id == "telephone"){
-                props.setConfirmationMode(true)
-                //props.submit()
+                props.document.getElementById(orderOfFields[6]).focus()
+            }
+            if(props.id == "DNItutor"){
+                props.document.getElementById(orderOfFields[7]).focus()
+            }
+            if(props.id == "surnameTutor"){
+                if(evaluateCharacters(event.target.value) && evaluateCharacters(props.document.getElementById("surnameTutor").value))
+                    props.document.getElementById(orderOfFields[8]).focus()
+            }
+            if(props.id == "nameTutor"){
+                if(evaluateCharacters(event.target.value) && evaluateCharacters(props.document.getElementById("nameTutor").value))
+                    props.setConfirmationMode(true)
             }
 		}
         if(
@@ -75,6 +85,7 @@ const DataInput =  (props) => {
             let coincidence = validations.some(a => a === true);
 
             if(!coincidence){
+                window.scrollTo(0,document.body.scrollHeight);
                 props.setErr('Ingresó al menos un caracter no permitido')
                 return false
             }
@@ -94,7 +105,8 @@ const DataInput =  (props) => {
                     type={props.type}
                     autoFocus={props.autoFocus}
                     onKeyDown={handleKeyDown} 
-                    value={ (props.name === "DNI del tutor/a" || props.name === "Apellido del tutor/a") ? "-" : props.state[props.id]}
+                    // value={ (props.name === "DNI del tutor/a" || props.name === "Apellido del tutor/a") ? "-" : props.state[props.id]}
+                    value={props.state[props.id]}
                     className="w-85"
                     InputProps={{
                         style: {fontSize: '1.3rem'},

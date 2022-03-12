@@ -1,35 +1,53 @@
 import { db } from "../firebase/FirebaseConfig";
 
-export const add = async (data, redirect) => {
-    await db.collection("grandfather-project").add({
-        student:{ 
-            DNI: parseInt(data.DNI),
-            name: data.name,
-            surname: data.surname,
-            course: data.course,
-            location: data.location,
-            birthday: data.birthday,
-            domicile: data.domicile,
-            telephone: data.telephone
-        }
-    })
-    .then(function() {
-        console.log("Document written");
-        redirect.push('/')
-    })
-    .catch(function(error) {
-        console.error("Error adding document: ", error);
-    });
+//creates a new student or a new tutor
+export const add = async (type, data, redirect) => {
+    if(type === "student"){
+        await db.collection("grandfather-project").add({
+            student:{ 
+                DNI: parseInt(data.DNI),
+                name: data.name,
+                surname: data.surname,
+                course: data.course,
+                location: data.location,
+                birthday: data.birthday,
+                domicile: data.domicile,
+                telephone: data.telephone
+            }
+        })
+        .then(function() {
+            console.log("Document written");
+            redirect.push('/')
+        })
+        .catch(function(error) {
+            console.error("Error adding document: ", error);
+        });
+    }
+    if(type === "tutor"){
+        await db.collection("grandfather-project").add({
+            tutor:{ 
+                DNI: parseInt(data.DNItutor),
+                surname: data.surnameTutor,
+                name: data.nameTutor,
+                studentInCharge: [data.DNI]
+            }
+        })
+        .then(function() {
+            console.log("Document written");
+        })
+        .catch(function(error) {
+            console.error("Error adding document: ", error);
+        });
+    }
 }
 
-export const search =  (data) => {
+export const search =  (type, DNI) => {
     return new Promise( async (resolve, reject) => {
-        console.log(data)
         // XA 
-        // 0 si no existe un alumno 
+        // 0 si no existe
         // 1 si sí existe
         let XA
-        await  db.collection("grandfather-project").where("student.DNI", "==", data)
+        await  db.collection("grandfather-project").where(type + ".DNI", "==", DNI)
         .get()
         .then(function(querySnapshot) {
             querySnapshot.forEach(function(doc) {

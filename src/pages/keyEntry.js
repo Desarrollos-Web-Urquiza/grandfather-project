@@ -90,7 +90,7 @@ const KeyEntry = props => {
 	}
 
 	const executesSearch =  async () =>	{
-		let promiseSearch =  await search(DNI)
+		let promiseSearch =  await search("student", DNI)
 		setSearchResult(promiseSearch)
 		analyzeSearchResult(promiseSearch)
 	}
