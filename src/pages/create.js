@@ -125,7 +125,7 @@ const Create = props => {
 		add("student", data, props.history)
 		let existsTutor =  await search("tutor", data.DNItutor)
 		console.log(existsTutor)
-		if(existsTutor === 0){
+		if(existsTutor.exitence === 0){
 			add("tutor", data)
 		}	else{
 			existsTutor = ""

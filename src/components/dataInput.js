@@ -1,4 +1,5 @@
 import TextField from '@material-ui/core/TextField';
+import { search } from "../db/functions/dbUtils";
 
 const DataInput =  (props) => {
     //filter input
@@ -7,7 +8,7 @@ const DataInput =  (props) => {
 		props.setData({ ...props.state, [e.target.id]: e.target.value})
 	}
 
-    const handleKeyDown = (event) => {
+    const handleKeyDown = async (event) => {
         //array that establishes the order if fields
         let orderOfFields = ["name", "course", "domicile", "location", "birthday", "telephone", "DNItutor", "surnameTutor", "nameTutor"]
         props.setErr(false)
@@ -39,7 +40,14 @@ const DataInput =  (props) => {
                 props.document.getElementById(orderOfFields[6]).focus()
             }
             if(props.id == "DNItutor"){
-                props.document.getElementById(orderOfFields[7]).focus()
+                let existsTutor =  await search("tutor", props.document.getElementById(orderOfFields[6]).value)
+                console.log(existsTutor)
+                if(existsTutor.exitence === 0){
+                    props.document.getElementById(orderOfFields[7]).focus()
+                }	else{
+                    props.document.getElementById(orderOfFields[7]).value = existsTutor.data.tutor.surname
+                    props.document.getElementById(orderOfFields[8]).value = existsTutor.data.tutor.name
+                }
             }
             if(props.id == "surnameTutor"){
                 if(evaluateCharacters(event.target.value) && evaluateCharacters(props.document.getElementById("surnameTutor").value))

@@ -12,7 +12,8 @@ export const add = async (type, data, redirect) => {
                 location: data.location,
                 birthday: data.birthday,
                 domicile: data.domicile,
-                telephone: data.telephone
+                telephone: data.telephone,
+                tutor: data.DNItutor
             }
         })
         .then(function() {
@@ -47,11 +48,15 @@ export const search =  (type, DNI) => {
         // 0 si no existe
         // 1 si sí existe
         let XA
-        await  db.collection("grandfather-project").where(type + ".DNI", "==", DNI)
+        let document
+        type = type + ".DNI"
+        console.log(type)
+        await  db.collection("grandfather-project").where(type, "==", parseInt(DNI))
         .get()
         .then(function(querySnapshot) {
             querySnapshot.forEach(function(doc) {
                 XA = doc.data()
+                document = doc.data()
             });
             console.log(XA)
             if(XA)  {
@@ -60,7 +65,11 @@ export const search =  (type, DNI) => {
                 XA = 0
             }
             console.log(XA)
-            return resolve(XA)
+            if(type.includes("tutor")){
+                return resolve({exitence: XA, data: document})
+            }   else{
+                return resolve(XA)
+            }
         })
         .catch(function(error) {
             console.log("Error getting documents: ", error);
