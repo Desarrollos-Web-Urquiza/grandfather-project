@@ -41,12 +41,18 @@ const DataInput =  (props) => {
             }
             if(props.id == "DNItutor"){
                 let existsTutor =  await search("tutor", props.document.getElementById(orderOfFields[6]).value)
-                console.log(existsTutor)
-                if(existsTutor.exitence === 0){
-                    props.document.getElementById(orderOfFields[7]).focus()
-                }	else{
-                    props.document.getElementById(orderOfFields[7]).value = existsTutor.data.tutor.surname
-                    props.document.getElementById(orderOfFields[8]).value = existsTutor.data.tutor.name
+                //verify if exitis previus text in inputs
+                if(props.document.getElementById(orderOfFields[7]).value === "" && props.document.getElementById(orderOfFields[8]).value === ""){
+                    //verify if exitis tutor in database
+                    if(existsTutor.exitence === 0){
+                        props.document.getElementById(orderOfFields[7]).focus()
+                    }	else{
+                        //filling the inputs with the text
+                        props.document.getElementById(orderOfFields[7]).value = existsTutor.data.tutor.surname
+                        props.document.getElementById(orderOfFields[8]).value = existsTutor.data.tutor.name
+                    }
+                }   else{
+                    props.setConfirmationMode(true)
                 }
             }
             if(props.id == "surnameTutor"){
