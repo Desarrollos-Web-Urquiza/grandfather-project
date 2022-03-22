@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet";
 import Card from '@material-ui/core/Card';
 import { grey } from '@material-ui/core/colors';
 import { withStyles } from '@material-ui/core/styles';
-import { add, search } from "../db/functions/dbUtils";
+import { add, search, update } from "../db/functions/dbUtils";
 import DataInput from "../components/dataInput";
 import TextField from '@material-ui/core/TextField';
 
@@ -129,6 +129,7 @@ const Create = props => {
 			add("tutor", data)
 		}	else{
 			existsTutor = ""
+			update(data)
 		}
 	}
 

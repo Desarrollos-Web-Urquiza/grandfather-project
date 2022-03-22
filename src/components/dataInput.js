@@ -48,8 +48,15 @@ const DataInput =  (props) => {
                         props.document.getElementById(orderOfFields[7]).focus()
                     }	else{
                         //filling the inputs with the text
+                        console.log(existsTutor.data.tutor.surname)
+                        console.log(existsTutor.doc.id)
                         props.document.getElementById(orderOfFields[7]).value = existsTutor.data.tutor.surname
                         props.document.getElementById(orderOfFields[8]).value = existsTutor.data.tutor.name
+                        props.setData({ 
+                            ...props.state, 
+                            surnameTutor: existsTutor.data.tutor.surname, 
+                            nameTutor: existsTutor.data.tutor.name
+                        })
                     }
                 }   else{
                     props.setConfirmationMode(true)

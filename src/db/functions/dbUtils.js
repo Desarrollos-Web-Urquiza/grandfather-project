@@ -56,7 +56,7 @@ export const search =  (type, DNI) => {
         .then(function(querySnapshot) {
             querySnapshot.forEach(function(doc) {
                 XA = doc.data()
-                document = doc.data()
+                document = doc
             });
             console.log(XA)
             if(XA)  {
@@ -66,7 +66,8 @@ export const search =  (type, DNI) => {
             }
             console.log(XA)
             if(type.includes("tutor")){
-                return resolve({exitence: XA, data: document})
+                console.log(document)
+                return resolve({exitence: XA, data: document.data(), doc: document})
             }   else{
                 return resolve(XA)
             }
@@ -77,3 +78,28 @@ export const search =  (type, DNI) => {
         });
     })
 }           
+
+
+export const update = async (data) => {
+    let dataOfPerson =  await search("tutor", data.DNItutor)
+    console.log( dataOfPerson.data.tutor.studentInCharge)
+    console.log( dataOfPerson.data.tutor)
+    console.log( dataOfPerson.data)
+    dataOfPerson.data.tutor.studentInCharge.push(data.DNI)
+    let newStudentInCharge = dataOfPerson.data.tutor.studentInCharge
+    console.log( newStudentInCharge)
+    await db.collection("grandfather-project").doc(dataOfPerson.doc.id).update({         
+        tutor: { 
+            DNI: dataOfPerson.data.tutor.DNI,
+            name: dataOfPerson.data.tutor.name,
+            studentInCharge: newStudentInCharge,
+            surname: dataOfPerson.data.tutor.surname
+        }
+    })
+    .then(function() {      
+        console.log("updated");
+    })
+    .catch(function(error) {
+      console.error("Error adding document: ", error);
+    });
+}
