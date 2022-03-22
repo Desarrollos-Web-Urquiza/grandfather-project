@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet";
 import Card from '@material-ui/core/Card';
 import { grey } from '@material-ui/core/colors';
 import { withStyles } from '@material-ui/core/styles';
-import { add } from "../db/functions/dbUtils";
+import { add, search, update } from "../db/functions/dbUtils";
 import DataInput from "../components/dataInput";
 import TextField from '@material-ui/core/TextField';
 
@@ -30,13 +30,14 @@ const Create = props => {
 		setData({...data, DNI: paramsFinished})
 	},[]);
 
-	const validationData = () => {
+	const validationData = async () => {
 		console.log(data)
 		if(data.surname === '' || typeof(data.surname) == 'undefined'){
 			setErr('Ingrese un apellido')
 			setConfirmationMode(false)
 			setTimeout(() => {
 				document.getElementById("surname").focus()
+				window.scrollTo(0,document.body.scrollHeight);
 			}, 300);
 			return
 		}	
@@ -45,6 +46,7 @@ const Create = props => {
 			setConfirmationMode(false)
 			setTimeout(() => {
 				document.getElementById("name").focus()
+				window.scrollTo(0,document.body.scrollHeight);
 			}, 300);
 			return
 		}
@@ -53,6 +55,7 @@ const Create = props => {
 			setConfirmationMode(false)
 			setTimeout(() => {
 				document.getElementById("course").focus()
+				window.scrollTo(0,document.body.scrollHeight);
 			}, 300);
 			return
 		}
@@ -61,6 +64,7 @@ const Create = props => {
 			setConfirmationMode(false)
 			setTimeout(() => {
 				document.getElementById("domicile").focus()
+				window.scrollTo(0,document.body.scrollHeight);
 			}, 300);
 			return
 		}
@@ -69,6 +73,7 @@ const Create = props => {
 			setConfirmationMode(false)
 			setTimeout(() => {
 				document.getElementById("location").focus()
+				window.scrollTo(0,document.body.scrollHeight);
 			}, 300);
 			return
 		}
@@ -77,6 +82,7 @@ const Create = props => {
 			setConfirmationMode(false)
 			setTimeout(() => {
 				document.getElementById("birthday").focus()
+				window.scrollTo(0,document.body.scrollHeight);
 			}, 300);
 			return
 		}
@@ -85,10 +91,46 @@ const Create = props => {
 			setConfirmationMode(false)
 			setTimeout(() => {
 				document.getElementById("telephone").focus()
+				window.scrollTo(0,document.body.scrollHeight);
 			}, 300);
 			return
 		}
-		add(data, props.history)
+		if(data.DNItutor === '' || typeof(data.DNItutor) == 'undefined'){
+			setErr('Ingrese DNI del tutor/a')
+			setConfirmationMode(false)
+			setTimeout(() => {
+				document.getElementById("DNItutor").focus()
+				window.scrollTo(0,document.body.scrollHeight);
+			}, 300);
+			return
+		}
+		if(data.surnameTutor === '' || typeof(data.surnameTutor) == 'undefined'){
+			setErr('Ingrese un apellido del tutor/a')
+			setConfirmationMode(false)
+			setTimeout(() => {
+				document.getElementById("surnameTutor").focus()
+				window.scrollTo(0,document.body.scrollHeight);
+			}, 300);
+			return
+		}
+		if(data.nameTutor === '' || typeof(data.nameTutor) == 'undefined'){
+			setErr('Ingrese un nombre del tutor/a')
+			setConfirmationMode(false)
+			setTimeout(() => {
+				document.getElementById("nameTutor").focus()
+				window.scrollTo(0,document.body.scrollHeight);
+			}, 300);
+			return
+		}
+		add("student", data, props.history)
+		let existsTutor =  await search("tutor", data.DNItutor)
+		console.log(existsTutor)
+		if(existsTutor.exitence === 0){
+			add("tutor", data)
+		}	else{
+			existsTutor = ""
+			update(data)
+		}
 	}
 
 	const confirmationDefinition = (definition) => {
@@ -293,14 +335,13 @@ const Create = props => {
 									id="DNItutor"
 									field="DNI del tutor/a" 
 									setData={setData} 
-									type={"text"} 
+									type={"number"} 
 									name={"DNI del tutor/a"} 
 									state={data} 
 									setErr={setErr} 
 									submit={validationData} 
 									document={document}
 									setConfirmationMode={setConfirmationMode}
-									disabled={true}
 								/>
 								<DataInput 
 									id="surnameTutor"
@@ -313,11 +354,23 @@ const Create = props => {
 									submit={validationData} 
 									document={document}
 									setConfirmationMode={setConfirmationMode}
-									disabled={true}
+								/>
+								<DataInput 
+									id="nameTutor"
+									field="Nombre del tutor/a" 
+									setData={setData} 
+									type={"text"} 
+									name={"Nombre del tutor/a"} 
+									state={data} 
+									setErr={setErr} 
+									submit={validationData} 
+									document={document}
+									setConfirmationMode={setConfirmationMode}
 								/>
 							</div>
 						}
 						{err && <b><p style={{color: "red"}}> {err} </p></b> }	
+						
 						<br />	
 						
 					</CardSelect>
