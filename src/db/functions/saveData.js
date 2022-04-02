@@ -1,7 +1,7 @@
-import { db } from "../firebase/FirebaseConfig";
+const {db} = require("../firebase/FirebaseConfigForNode")
 
 //creates a new student or a new tutor
-export const add = async (type, data, redirect) => {
+const add = async (type, data, redirect) => {
     if(type === "student"){
         await db.collection("grandfather-project").add({
             student:{ 
@@ -42,7 +42,32 @@ export const add = async (type, data, redirect) => {
     }
 }
 
-export const search =  (type, DNI) => {
+const update = async (data) => {
+    console.log("data.DNItutor", data.DNItutor)
+    let dataOfPerson =  await search("tutor", data.DNItutor)
+    console.log("dataOfPerson", dataOfPerson)
+    console.log( dataOfPerson.data.tutor.studentInCharge)
+    console.log( dataOfPerson.data.tutor)
+    dataOfPerson.data.tutor.studentInCharge.push(data.DNI)
+    let newStudentInCharge = dataOfPerson.data.tutor.studentInCharge
+    console.log( newStudentInCharge)
+    await db.collection("grandfather-project").doc(dataOfPerson.doc.id).update({         
+        tutor: { 
+            DNI: dataOfPerson.data.tutor.DNI,
+            name: dataOfPerson.data.tutor.name,
+            studentInCharge: newStudentInCharge,
+            surname: dataOfPerson.data.tutor.surname
+        }
+    })
+    .then(function() {      
+        console.log("updated");
+    })
+    .catch(function(error) {
+      console.error("Error adding document: ", error);
+    });
+}
+
+const search =  (type, DNI) => {
     return new Promise( async (resolve, reject) => {
         // XA 
         // 0 si no existe
@@ -51,6 +76,7 @@ export const search =  (type, DNI) => {
         let document
         type = type + ".DNI"
         console.log(type)
+        console.log("DNI search", DNI)
         await  db.collection("grandfather-project").where(type, "==", parseInt(DNI))
         .get()
         .then(function(querySnapshot) {
@@ -77,28 +103,34 @@ export const search =  (type, DNI) => {
             return reject(error)
         });
     })
-}           
+}    
 
-export const update = async (data) => {
-    let dataOfPerson =  await search("tutor", data.DNItutor)
-    console.log( dataOfPerson.data.tutor.studentInCharge)
-    console.log( dataOfPerson.data.tutor)
-    console.log( dataOfPerson.data)
-    dataOfPerson.data.tutor.studentInCharge.push(data.DNI)
-    let newStudentInCharge = dataOfPerson.data.tutor.studentInCharge
-    console.log( newStudentInCharge)
-    await db.collection("grandfather-project").doc(dataOfPerson.doc.id).update({         
-        tutor: { 
-            DNI: dataOfPerson.data.tutor.DNI,
-            name: dataOfPerson.data.tutor.name,
-            studentInCharge: newStudentInCharge,
-            surname: dataOfPerson.data.tutor.surname
+const saveData = async () => {
+    for (let index = 0 ; index < 2 ; index++) {
+        let data = {
+            DNI: "12345678",
+            DNItutor: "2342423",
+            birthday: "2007-04-03",
+            course: "1-1",
+            domicile: "Cullen 777",
+            location: "Rosario",
+            name: "Juan",
+            nameTutor: "Alberto",
+            surname: "Perez",
+            surnameTutor: "Perez",
+            telephone: "4342434"
         }
-    })
-    .then(function() {      
-        console.log("updated");
-    })
-    .catch(function(error) {
-      console.error("Error adding document: ", error);
-    });
+        add("student", data, "")
+        let existsTutor = await search("tutor", data.DNItutor)
+        console.log(existsTutor)
+    
+        if(existsTutor.exitence === 0){
+            add("tutor", data)
+        }	else{
+            existsTutor = ""
+            update(data)
+        }
+    }
 }
+
+saveData()
