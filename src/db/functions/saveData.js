@@ -1,4 +1,5 @@
 const {db} = require("../firebase/FirebaseConfigForNode")
+const students = require("../../data/dataToSave.json")
 
 //creates a new student or a new tutor
 const add = async (type, data, redirect) => {
@@ -18,7 +19,7 @@ const add = async (type, data, redirect) => {
         })
         .then(function() {
             console.log("Document written");
-            redirect.push('/')
+            // redirect.push('/')
         })
         .catch(function(error) {
             console.error("Error adding document: ", error);
@@ -92,9 +93,10 @@ const search =  (type, DNI) => {
             }
             console.log(XA)
             if(type.includes("tutor") && XA === 1){
-                console.log(document)
+                console.log("tutor", document)
                 return resolve({exitence: XA, data: document.data(), doc: document})
             }   else{
+                console.log("tutor not founded", document)
                 return resolve(XA)
             }
         })
@@ -106,31 +108,40 @@ const search =  (type, DNI) => {
 }    
 
 const saveData = async () => {
-    for (let index = 0 ; index < 2 ; index++) {
-        let data = {
-            DNI: "12345678",
-            DNItutor: "2342423",
-            birthday: "2007-04-03",
-            course: "1-1",
-            domicile: "Cullen 777",
-            location: "Rosario",
-            name: "Juan",
-            nameTutor: "Alberto",
-            surname: "Perez",
-            surnameTutor: "Perez",
-            telephone: "4342434"
-        }
-        add("student", data, "")
-        let existsTutor = await search("tutor", data.DNItutor)
-        console.log(existsTutor)
+    // for (let index = 0 ; index < 2 ; index++) {
+    //     add("student", data, "")
+    //     let existsTutor = await search("tutor", data.DNItutor)
+    //     console.log("existsTutor", existsTutor)
+    //     console.log("existsTutor", existsTutor)
     
-        if(existsTutor.exitence === 0){
-            add("tutor", data)
+    //     if(existsTutor === 0){
+    //         console.log("no exits tutor")
+    //         add("tutor", data)
+    //     }	else{
+    //         console.log("exits tutor")
+    //         existsTutor = ""
+    //         update(data)
+    //     }
+    // }
+
+    for (let index = 0 ; index < students.students.length ; index++) {
+        console.log(students.students[index])
+        add("student", students.students[index], "")
+        let existsTutor = await search("tutor", students.students[index].DNItutor)    
+        if(existsTutor === 0){
+            console.log("no exits tutor")
+            add("tutor", students.students[index])
         }	else{
+            console.log("exits tutor")
             existsTutor = ""
-            update(data)
+            update(students.students[index])
         }
     }
 }
 
+const showStudents = () => {
+    console.log(typeof students)
+}
+
 saveData()
+// showStudents()
