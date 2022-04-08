@@ -41,7 +41,7 @@ const KeyEntry = props => {
 			case "3":
 				setOperationType('BAJA')
 				break;
-			case "4":
+			case "5":
 				props.history.push('/fin')
 				break;
 			default:

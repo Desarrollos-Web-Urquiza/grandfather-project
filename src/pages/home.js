@@ -30,8 +30,8 @@ const Home = props => {
 			e.target.value = ""
 			return
 		}
-		if((operationNumber < 1 || operationNumber > 4) && e.target.value != "")	{
-			setErr("Error: Debe ingresar un número del 1 a 4")
+		if((operationNumber < 1 || operationNumber > 5) && e.target.value != "")	{
+			setErr("Error: Debe ingresar un número del 1 a 5")
 			e.target.value = ""
 			return
 		}	else	{
@@ -40,11 +40,15 @@ const Home = props => {
 	}
 	
 	const redirection = (data) =>	{
+		console.log(data)
 		if(data == ""){
 			setErr("Error: Los datos están vacíos")
 		}	else {
-			console.log("Entró al segundo else")
-			props.history.push('/ingresoClave/' + data)
+			if(data === "4"){
+				props.history.push('/lists')
+			}else{
+				props.history.push('/ingresoClave/' + data)
+			}
 		}
 	}
 
@@ -60,7 +64,8 @@ const Home = props => {
 						<p>1 Altas</p>
 						<p>2 Modificaciones</p>
 						<p>3 Bajas</p>
-						<p>4 Fin</p>
+						<p>4 Listados</p>
+						<p>5 Fin</p>
 					</div>
 					<br />
 					<br />	
