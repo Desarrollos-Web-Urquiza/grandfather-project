@@ -102,3 +102,22 @@ export const update = async (data) => {
       console.error("Error adding document: ", error);
     });
 }
+
+export const getAll = async (type) => {
+   return new Promise( async (resolve, reject) => {
+        let results = []
+        await  db.collection("grandfather-project")
+        .orderBy("student")
+        .get()
+        .then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+                results.push(doc.data())
+            });
+            return resolve(results)
+        })
+        .catch(function(error) {
+            console.log("Error getting documents: ", error);
+            return reject(error)
+        });
+    })
+}
