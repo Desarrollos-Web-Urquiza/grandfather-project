@@ -12,6 +12,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+// import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 const styles = theme => ({
 	root: {
@@ -24,23 +25,21 @@ const styles = theme => ({
 	},
 });
 
+const GlobalCss = withStyles({
+  // @global is handled by jss-plugin-global.
+  '@global': {
+    // You should target [class*="MuiButton-root"] instead if you nest themes.
+    '.MuiTableCell-root': {
+		borderBottom: '1px dashed rgb(4 3 3)' ,
+    },
+  },
+})(() => null);
+
 let id = 0;
 function createData(DNI, surname, fat, carbs, protein) {
 	id += 1;
 	return { id, DNI, surname, fat, carbs, protein };
 }
-
-// const rows = [
-	
-
-// 	// createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-// 	// createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-// 	// createData('Eclair', 262, 16.0, 24, 6.0),
-// 	// createData('Cupcake', 305, 3.7, 67, 4.3),
-// 	// createData('Gingerbread', 356, 16.0, 49, 3.9),
-
-// ];
-
 
 const Lists = props => {
 
@@ -70,6 +69,7 @@ const Lists = props => {
 
 	return(
 		<div align="center" className="mainCenter">
+			<GlobalCss />
 			<Helmet>
 				<title>Grandfather project - Listados</title>
 			</Helmet>
@@ -91,20 +91,21 @@ const Lists = props => {
 				<TableBody>
 				{rows.length !== 0 && (
 						rows.map(row => (
-							<TableRow key={row.id}>
-							<TableCell component="th" scope="row">
-								{row.DNI}
-							</TableCell>
-							<TableCell align="right">{row.surname}</TableCell>
-							<TableCell align="right">{row.name}</TableCell>
-							<TableCell align="right">{row.birthday}</TableCell>
-							<TableCell align="right">{row.course}</TableCell>
-							<TableCell align="right" width="100px">{row.domicile}</TableCell>
-							<TableCell align="right">{row.location}</TableCell>
-							<TableCell align="right" width="100px">{row.telephone}</TableCell>
-							<TableCell align="right">{row.tutor}</TableCell>
 						
-							</TableRow>
+								<TableRow key={row.id}>
+									<TableCell component="th" scope="row">
+										{row.DNI}
+									</TableCell>
+									<TableCell align="right">{row.surname}</TableCell>
+									<TableCell align="right">{row.name}</TableCell>
+									<TableCell align="right">{row.birthday}</TableCell>
+									<TableCell align="right">{row.course}</TableCell>
+									<TableCell align="right" width="100px">{row.domicile}</TableCell>
+									<TableCell align="right">{row.location}</TableCell>
+									<TableCell align="right" width="100px">{row.telephone}</TableCell>
+									<TableCell align="right">{row.tutor}</TableCell>
+								</TableRow>
+							
 						))
 					)
 				}
