@@ -40,7 +40,9 @@ function createData(DNI, surname, fat, carbs, protein) {
 	id += 1;
 	return { id, DNI, surname, fat, carbs, protein };
 }
-
+const customColumnStyle = {
+    width: "200px",
+};
 const Lists = props => {
 
 	const { classes } = props;
@@ -68,7 +70,7 @@ const Lists = props => {
 	},[]);
 
 	return(
-		<div align="center" className="mainCenter">
+		<div align="center" >
 			<GlobalCss />
 			<Helmet>
 				<title>Grandfather project - Listados</title>
@@ -78,14 +80,14 @@ const Lists = props => {
 				<TableHead>
 				<TableRow>
 					<TableCell><b>DNI</b></TableCell>
-					<TableCell align="right"><b>Apellido</b></TableCell>
-					<TableCell align="right"><b>Nombre</b></TableCell>
-					<TableCell align="right"><b>Fecha de nacimiento</b></TableCell>
-					<TableCell align="right"><b>Curso</b></TableCell>
-					<TableCell align="right"><b>Domicilio</b></TableCell>
-					<TableCell align="right"><b>Localidad</b></TableCell>
-					<TableCell align="right"><b>Teléfono</b></TableCell>
-					<TableCell align="right"><b>DNI de Tutor</b></TableCell>
+					<TableCell align="left"><b>Apellido</b></TableCell>
+					<TableCell align="left"><b>Nombre</b></TableCell>
+					<TableCell align="left"><b>Fecha de nacimiento</b></TableCell>
+					<TableCell align="left"><b>Curso</b></TableCell>
+					<TableCell align="left" ><b>Domicilio</b></TableCell>
+					<TableCell align="left"><b>Localidad</b></TableCell>
+					<TableCell align="left"><b>Teléfono</b></TableCell>
+					<TableCell align="left"><b>DNI de Tutor</b></TableCell>
 				</TableRow>
 				</TableHead>
 				<TableBody>
@@ -96,14 +98,15 @@ const Lists = props => {
 									<TableCell component="th" scope="row">
 										{row.DNI}
 									</TableCell>
-									<TableCell align="right">{row.surname}</TableCell>
-									<TableCell align="right">{row.name}</TableCell>
-									<TableCell align="right">{row.birthday}</TableCell>
-									<TableCell align="right">{row.course}</TableCell>
-									<TableCell align="right" width="100px">{row.domicile}</TableCell>
-									<TableCell align="right">{row.location}</TableCell>
-									<TableCell align="right" width="100px">{row.telephone}</TableCell>
-									<TableCell align="right">{row.tutor}</TableCell>
+									<TableCell align="left" >{row.surname}</TableCell>
+									<TableCell align="left">{row.name}</TableCell>
+									<TableCell align="left">{row.birthday}</TableCell>
+									<TableCell align="left">{row.course}</TableCell>
+									{/* <TableCell align="left" style={customColumnStyle}>{row.domicile}</TableCell> */}
+									<TableCell align="left">{row.domicile}</TableCell>
+									<TableCell align="left">{row.location}</TableCell>
+									<TableCell align="left" width="100px">{row.telephone}</TableCell>
+									<TableCell align="left">{row.tutor}</TableCell>
 								</TableRow>
 							
 						))
