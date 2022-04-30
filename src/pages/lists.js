@@ -48,11 +48,14 @@ const Lists = props => {
 	const { classes } = props;
 	const [list, setList] = useState([]);
 	const [rows, setRows] = useState([]);
+	const [tutors, setTutors] = useState([]);
 
 	useEffect(() => {
 		async function fetchData() {
 			const params = await getAll("student");
+			const params2 = await getAll("tutor");
 			console.log(params)
+			console.log(params2)
 			// setList(params)
 			let arrayOfParams = []
 			let i = 0
@@ -62,12 +65,20 @@ const Lists = props => {
 			))
 			console.log(arrayOfParams)
 			setRows(arrayOfParams)
+			setTutors(params2)
 		}
 		fetchData();
 		// list.map(item => (
 		// 	rows.createData(item.DNI)
 		// ))
 	},[]);
+
+	const findTutorData = (DNI, datoToFind) =>{ 
+		let tutorFounded = tutors.find(element => element.tutor.DNI == parseInt(DNI))
+		console.log(tutorFounded)
+		if(tutorFounded !== undefined)
+			return tutorFounded.tutor[datoToFind]
+	}
 
 	return(
 		<div align="center" >
@@ -88,6 +99,8 @@ const Lists = props => {
 					<TableCell align="left"><b>Localidad</b></TableCell>
 					<TableCell align="left"><b>Teléfono</b></TableCell>
 					<TableCell align="left"><b>DNI de Tutor</b></TableCell>
+					<TableCell align="left"><b>Nombre del Tutor</b></TableCell>
+					<TableCell align="left"><b>Apellido del Tutor</b></TableCell>
 				</TableRow>
 				</TableHead>
 				<TableBody>
@@ -107,6 +120,8 @@ const Lists = props => {
 									<TableCell align="left">{row.location}</TableCell>
 									<TableCell align="left" width="100px">{row.telephone}</TableCell>
 									<TableCell align="left">{row.tutor}</TableCell>
+									<TableCell align="left">{findTutorData(row.tutor, "name")}</TableCell>
+									<TableCell align="left">{findTutorData(row.tutor, "surname")}</TableCell>
 								</TableRow>
 							
 						))

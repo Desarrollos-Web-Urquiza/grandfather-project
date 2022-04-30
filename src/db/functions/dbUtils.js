@@ -107,7 +107,7 @@ export const getAll = async (type) => {
    return new Promise( async (resolve, reject) => {
         let results = []
         await  db.collection("grandfather-project")
-        .orderBy("student")
+        .orderBy(type)
         .get()
         .then(function(querySnapshot) {
             querySnapshot.forEach(function(doc) {
