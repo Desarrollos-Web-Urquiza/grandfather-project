@@ -6,13 +6,6 @@ import { Helmet } from "react-helmet";
 import { getAll } from "../db/functions/dbUtils";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-// import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 const styles = theme => ({
 	root: {
@@ -47,25 +40,17 @@ const Lists = props => {
 
 	const { classes } = props;
 	const [list, setList] = useState([]);
-	const [rows, setRows] = useState([]);
+	const [students, setStudents] = useState([]);
 	const [tutors, setTutors] = useState([]);
 
 	useEffect(() => {
 		async function fetchData() {
-			const params = await getAll("student");
-			const params2 = await getAll("tutor");
-			console.log(params)
-			console.log(params2)
-			// setList(params)
-			let arrayOfParams = []
-			let i = 0
-			params.map(item => (
-				arrayOfParams.push({id: i, DNI: item.student.DNI, surname: item.student.surname, name: item.student.name, birthday: item.student.birthday, course: item.student.course,  domicile: item.student.domicile, location: item.student.location , telephone: item.student.telephone, tutor: item.student.tutor} ),
-				i++
-			))
-			console.log(arrayOfParams)
-			setRows(arrayOfParams)
-			setTutors(params2)
+			const studentsList = await getAll("student");
+			const tutorsList = await getAll("tutor");
+			console.log(studentsList)
+			console.log(tutorsList)
+			setStudents(studentsList)
+			setTutors(tutorsList)
 		}
 		fetchData();
 		// list.map(item => (
@@ -81,55 +66,41 @@ const Lists = props => {
 	}
 
 	return(
-		<div align="center" >
+		<div className="overflow-hidden">
 			<GlobalCss />
 			<Helmet>
 				<title>Grandfather project - Listados</title>
 			</Helmet>
 
-			<Table className={classes.table}>
-				<TableHead>
-				<TableRow>
-					<TableCell><b>DNI</b></TableCell>
-					<TableCell align="left"><b>Apellido</b></TableCell>
-					<TableCell align="left"><b>Nombre</b></TableCell>
-					<TableCell align="left"><b>Fecha de nacimiento</b></TableCell>
-					<TableCell align="left"><b>Curso</b></TableCell>
-					<TableCell align="left" ><b>Domicilio</b></TableCell>
-					<TableCell align="left"><b>Localidad</b></TableCell>
-					<TableCell align="left"><b>Teléfono</b></TableCell>
-					<TableCell align="left"><b>DNI de Tutor</b></TableCell>
-					<TableCell align="left"><b>Nombre del Tutor</b></TableCell>
-					<TableCell align="left"><b>Apellido del Tutor</b></TableCell>
-				</TableRow>
-				</TableHead>
-				<TableBody>
-				{rows.length !== 0 && (
-						rows.map(row => (
-						
-								<TableRow key={row.id}>
-									<TableCell component="th" scope="row">
-										{row.DNI}
-									</TableCell>
-									<TableCell align="left" >{row.surname}</TableCell>
-									<TableCell align="left">{row.name}</TableCell>
-									<TableCell align="left">{row.birthday}</TableCell>
-									<TableCell align="left">{row.course}</TableCell>
-									{/* <TableCell align="left" style={customColumnStyle}>{row.domicile}</TableCell> */}
-									<TableCell align="left">{row.domicile}</TableCell>
-									<TableCell align="left">{row.location}</TableCell>
-									<TableCell align="left" width="100px">{row.telephone}</TableCell>
-									<TableCell align="left">{row.tutor}</TableCell>
-									<TableCell align="left">{findTutorData(row.tutor, "name")}</TableCell>
-									<TableCell align="left">{findTutorData(row.tutor, "surname")}</TableCell>
-								</TableRow>
-							
-						))
-					)
-				}
-				</TableBody>
-			</Table>
-		
+			{students.length !== 0 && (
+					students.map(row => (
+						<div className='itemList'>
+							<p><b>DNI:</b></p>
+							<p>{row.student.DNI}</p>
+							<p><b>Apellido/s:</b></p>
+							<p>{row.student.surname}</p>
+							<p><b>Nombre/s:</b></p>
+							<p>{row.student.name}</p>
+							<p><b>Curso:</b></p>
+							<p>{row.student.course}</p>
+							<p><b>Domicilio:</b></p>
+							<p>{row.student.domicile}</p>
+							<p><b>Localidad:</b></p>
+							<p>{row.student.location}</p>
+							<p><b>Fecha de nacimiento:</b></p>
+							<p>{row.student.birthday}</p>
+							<p><b>Teléfono:</b></p>
+							<p>{row.student.telephone}</p>
+							<p><b>DNI del tutor/a:</b></p>
+							<p>{row.student.tutor}</p>
+							<p><b>Apellido del tutor/a:</b></p>
+							<p>{findTutorData(row.student.tutor, "name")}</p>
+							<p><b>Nombre del tutor/a:</b></p>
+							<p>{findTutorData(row.student.tutor, "surname")}</p>
+						</div>
+					))
+				)
+			}
 		</div>
 	)
 }

@@ -23,6 +23,11 @@
   .w-85{
     width: 21rem;
   }
+  .itemList{
+    @apply text-2xl;
+    @apply flex;
+    border-bottom: 1px dashed rgb(4 3 3);
+  }
 }
 
 body {
