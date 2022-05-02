@@ -76,9 +76,10 @@ const Lists = props => {
 					students.map(row => (
 						<div className='itemList'>
 							<p><b>DNI:</b></p>
-							<p>{row.student.DNI}</p>
-							<p><b>Apellido/s:</b></p>
-							<p>{row.student.surname}</p>
+							<p className='ml-2'>{row.student.DNI}</p>
+							<p className='ml-4 mr-2'><b>Apellido/s:</b></p>
+							{/* <p className='mr-4'>{row.student.surname}</p> */}
+							<div className='w-40 ml-4' style={{marginLeft: 400}}>Martin Carlos Agustin Cristoph</div>
 							<p><b>Nombre/s:</b></p>
 							<p>{row.student.name}</p>
 							<p><b>Curso:</b></p>
