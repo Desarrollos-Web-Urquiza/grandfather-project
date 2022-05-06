@@ -75,29 +75,50 @@ const Lists = props => {
 			{students.length !== 0 && (
 					students.map(row => (
 						<div className='itemList'>
-							<p><b>DNI:</b></p>
-							<p className='ml-2'>{row.student.DNI}</p>
-							<p className='ml-4 mr-2'><b>Apellido/s:</b></p>
-							{/* <p className='mr-4'>{row.student.surname}</p> */}
-							<div className='w-40 ml-4' style={{marginLeft: 400}}>Martin Carlos Agustin Cristoph</div>
-							<p><b>Nombre/s:</b></p>
-							<p>{row.student.name}</p>
-							<p><b>Curso:</b></p>
-							<p>{row.student.course}</p>
-							<p><b>Domicilio:</b></p>
-							<p>{row.student.domicile}</p>
-							<p><b>Localidad:</b></p>
-							<p>{row.student.location}</p>
-							<p><b>Fecha de nacimiento:</b></p>
-							<p>{row.student.birthday}</p>
-							<p><b>Teléfono:</b></p>
-							<p>{row.student.telephone}</p>
-							<p><b>DNI del tutor/a:</b></p>
-							<p>{row.student.tutor}</p>
-							<p><b>Apellido del tutor/a:</b></p>
-							<p>{findTutorData(row.student.tutor, "name")}</p>
-							<p><b>Nombre del tutor/a:</b></p>
-							<p>{findTutorData(row.student.tutor, "surname")}</p>
+							<div>
+								<p><b>DNI:</b></p>
+								<p className='ml-2'>{row.student.DNI}</p>
+							</div>
+							<div>
+								<p className='ml-4 mr-2'><b>Apellido/s:</b></p>
+								<p><div className='w-85 ml-2'>{row.student.surname}</div></p>
+							</div>
+							<div>
+								<p><b>Nombre/s:</b></p>
+								<p><div className='w-85 ml-2'> {row.student.name} </div></p>
+							</div>
+							<div>
+								<p><b>Curso:</b></p>
+								<p>{row.student.course}</p>
+							</div>
+							<div>
+								<p><b>Domicilio:</b></p>
+								<p>{row.student.domicile}</p>
+							</div>
+							<div>
+								<p><b>Localidad:</b></p>
+								<p>{row.student.location}</p>
+							</div>
+							<div>
+								<p><b>Fecha de nacimiento:</b></p>
+								<p>{row.student.birthday}</p>
+							</div>
+							<div>
+								<p><b>Teléfono:</b></p>
+								<p>{row.student.telephone}</p>
+							</div>
+							<div>
+								<p><b>DNI del tutor/a:</b></p>
+								<p>{row.student.tutor}</p>
+							</div>
+							<div>
+								<p><b>Apellido del tutor/a:</b></p>
+								<p>{findTutorData(row.student.tutor, "name")}</p>
+							</div>
+							<div>
+								<p><b>Nombre del tutor/a:</b></p>
+								<p>{findTutorData(row.student.tutor, "surname")}</p>
+							</div>
 						</div>
 					))
 				)
