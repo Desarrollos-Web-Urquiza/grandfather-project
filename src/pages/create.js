@@ -263,6 +263,7 @@ const Create = props => {
 									autoFocus={true} 
 									submit={validationData} 
 									document={document}
+									maxLength={30}
 								/>
 								<DataInput 
 									id="name"
@@ -274,6 +275,7 @@ const Create = props => {
 									setErr={setErr} 
 									submit={validationData} 
 									document={document}
+									maxLength={30}
 								/>
 								<DataInput 
 									id="course"
@@ -285,6 +287,7 @@ const Create = props => {
 									setErr={setErr} 
 									submit={validationData} 
 									document={document}
+									maxLength={4}
 								/>
 								<DataInput 
 									id="domicile"
@@ -296,6 +299,7 @@ const Create = props => {
 									setErr={setErr} 
 									submit={validationData} 
 									document={document}
+									maxLength={25}
 								/>
 								<DataInput 
 									id="location"
@@ -307,6 +311,7 @@ const Create = props => {
 									setErr={setErr} 
 									submit={validationData} 
 									document={document}
+									maxLength={25}
 								/>
 								<DataInput 
 									id="birthday"
@@ -330,6 +335,7 @@ const Create = props => {
 									submit={validationData} 
 									document={document}
 									setConfirmationMode={setConfirmationMode}
+									maxLength={20}
 								/>
 								<DataInput 
 									id="DNItutor"
@@ -342,6 +348,7 @@ const Create = props => {
 									submit={validationData} 
 									document={document}
 									setConfirmationMode={setConfirmationMode}
+									maxLength={8}
 								/>
 								<DataInput 
 									id="surnameTutor"
@@ -354,6 +361,7 @@ const Create = props => {
 									submit={validationData} 
 									document={document}
 									setConfirmationMode={setConfirmationMode}
+									maxLength={30}
 								/>
 								<DataInput 
 									id="nameTutor"
@@ -366,6 +374,7 @@ const Create = props => {
 									submit={validationData} 
 									document={document}
 									setConfirmationMode={setConfirmationMode}
+									maxLength={30}
 								/>
 							</div>
 						}

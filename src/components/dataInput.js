@@ -4,6 +4,11 @@ import { search } from "../db/functions/dbUtils";
 const DataInput =  (props) => {
     //filter input
     const handleData = (e) =>	{
+        //limit amount of characters from telephone
+        if(e.target.id === "telephone" &&  e.target.value.length > 20){
+            props.document.getElementById("telephone").value = ""
+            return
+        }
         props.setErr(false)
 		props.setData({ ...props.state, [e.target.id]: e.target.value})
 	}
@@ -131,7 +136,7 @@ const DataInput =  (props) => {
                     className="w-85"
                     InputProps={{
                         style: {fontSize: '1.3rem'},
-                        inputProps: { maxLength: 30 }
+                        inputProps: { maxLength: props.maxLength ? props.maxLength : 30 }
                     }}
                     disabled={props.disabled ? true : false}
                 />
