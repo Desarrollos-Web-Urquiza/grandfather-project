@@ -25,6 +25,10 @@
     padding: 0 1rem;
     margin: 1rem auto 0;
 }
+.nextOrBackPage{
+    color: blue;
+    cursor: pointer
+}
 
 /* .itemList{
     border-bottom: 1px dashed rgb(4 3 3);

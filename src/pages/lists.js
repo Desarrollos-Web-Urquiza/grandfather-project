@@ -28,11 +28,11 @@ const GlobalCss = withStyles({
   },
 })(() => null);
 
-let id = 0;
-function createData(DNI, surname, fat, carbs, protein) {
-	id += 1;
-	return { id, DNI, surname, fat, carbs, protein };
-}
+// let id = 0;
+// function createData(DNI, surname, fat, carbs, protein) {
+// 	id += 1;
+// 	return { id, DNI, surname, fat, carbs, protein };
+// }
 const customColumnStyle = {
     width: "200px",
 };
@@ -40,6 +40,10 @@ const Lists = props => {
 
 	const { classes } = props;
 	const [list, setList] = useState([]);
+	const [lastPage, setLastPage] = useState(false);
+	const [amountToShow, setAmountToShow] = useState(5);
+	const [page, setPage] = useState(1);
+	const [studentsAll, setStudentsAll] = useState([]);
 	const [students, setStudents] = useState([]);
 	const [tutors, setTutors] = useState([]);
 
@@ -49,14 +53,54 @@ const Lists = props => {
 			const tutorsList = await getAll("tutor");
 			console.log(studentsList)
 			console.log(tutorsList)
-			setStudents(studentsList)
+			setStudentsAll(studentsList)
 			setTutors(tutorsList)
+			let studentsToShow = []
+			for (let index = 0; index < amountToShow; index++) {
+				studentsToShow[index]	=  	studentsList[index]
+			}
+			setStudents(studentsToShow)
+			if(studentsList.length < 8)
+				setLastPage(true)
 		}
 		fetchData();
 		// list.map(item => (
 		// 	rows.createData(item.DNI)
 		// ))
 	},[]);
+
+	const changePage = (nextOrBack) =>{ 
+		let newPage 
+		console.log(page)
+		if(nextOrBack === "next"){
+			newPage = page + 1 
+		}	else {
+			newPage = page - 1 
+		}
+		console.log(newPage)
+		let final = amountToShow * newPage
+		let initial = final - amountToShow
+		let studentsToShow = []
+		console.log(initial)
+		console.log(final)
+		console.log(studentsAll.length)
+		if(final >= studentsAll.length ){
+			setLastPage(true)
+			final = studentsAll.length
+		}	else{
+			setLastPage(false)
+		}
+		if(initial >= studentsAll.length){
+			setLastPage(true)
+			return
+		}
+		for (let index = initial; index < final; index++) {
+			studentsToShow[index]	=  	studentsAll[index]
+		}
+		setStudents(studentsToShow)
+		setPage(newPage)
+		
+	}
 
 	const findTutorData = (DNI, datoToFind) =>{ 
 		let tutorFounded = tutors.find(element => element.tutor.DNI == parseInt(DNI))
@@ -71,7 +115,8 @@ const Lists = props => {
 			<Helmet>
 				<title>Grandfather project - Listados</title>
 			</Helmet>
-
+			<h2 align="center"><b>Listado de alumnos y sus tutores</b></h2>
+			<p className='text-2xl'>Hoja {page}</p>
 			{students.length !== 0 && (
 					students.map(row => (
 						<div className='itemList'>
@@ -123,6 +168,10 @@ const Lists = props => {
 					))
 				)
 			}
+			<div align="center">
+				{ page !== 1 && <h3 className='nextOrBackPage' onClick={() => changePage('back') }> {`< Retroceder página`} </h3> }
+				{ !lastPage && <h3 className='nextOrBackPage' onClick={() => changePage('next') }>Avanzar página > </h3>  }
+			</div>
 		</div>
 	)
 }
