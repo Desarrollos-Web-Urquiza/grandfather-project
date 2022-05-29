@@ -6,6 +6,11 @@ import { Helmet } from "react-helmet";
 import { getAll } from "../db/functions/dbUtils";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 
 const styles = theme => ({
 	root: {
@@ -41,7 +46,7 @@ const Lists = props => {
 	const { classes } = props;
 	const [list, setList] = useState([]);
 	const [lastPage, setLastPage] = useState(false);
-	const [amountToShow, setAmountToShow] = useState(5);
+	const [amountToShow, setAmountToShow] = useState(13);
 	const [page, setPage] = useState(1);
 	const [studentsAll, setStudentsAll] = useState([]);
 	const [students, setStudents] = useState([]);
@@ -117,57 +122,48 @@ const Lists = props => {
 			</Helmet>
 			<h2 align="center"><b>Listado de alumnos y sus tutores</b></h2>
 			<p className='text-2xl'>Hoja {page}</p>
-			{students.length !== 0 && (
-					students.map(row => (
-						<div className='itemList'>
-							<div>
-								<p><b>DNI:</b></p>
-								<p className='ml-2'>{row.student.DNI}</p>
-							</div>
-							<div>
-								<p className='ml-4 mr-2'><b>Apellido/s:</b></p>
-								<p><div className='w-85 ml-2'>{row.student.surname}</div></p>
-							</div>
-							<div>
-								<p><b>Nombre/s:</b></p>
-								<p><div className='w-85 ml-2'> {row.student.name} </div></p>
-							</div>
-							<div>
-								<p><b>Curso:</b></p>
-								<p>{row.student.course}</p>
-							</div>
-							<div>
-								<p><b>Domicilio:</b></p>
-								<p>{row.student.domicile}</p>
-							</div>
-							<div>
-								<p><b>Localidad:</b></p>
-								<p>{row.student.location}</p>
-							</div>
-							<div>
-								<p><b>Fecha de nacimiento:</b></p>
-								<p>{row.student.birthday}</p>
-							</div>
-							<div>
-								<p><b>Teléfono:</b></p>
-								<p>{row.student.telephone}</p>
-							</div>
-							<div>
-								<p><b>DNI del tutor/a:</b></p>
-								<p>{row.student.tutor}</p>
-							</div>
-							<div>
-								<p><b>Apellido del tutor/a:</b></p>
-								<p>{findTutorData(row.student.tutor, "name")}</p>
-							</div>
-							<div>
-								<p><b>Nombre del tutor/a:</b></p>
-								<p>{findTutorData(row.student.tutor, "surname")}</p>
-							</div>
-						</div>
-					))
-				)
-			}
+				<Table className={classes.table}>
+					<TableHead>
+					<TableRow>
+						<TableCell><b>DNI</b></TableCell>
+						<TableCell align="left"><b>Apellido</b></TableCell>
+						<TableCell align="left"><b>Nombre</b></TableCell>
+						<TableCell align="left"><b>Fecha de nacimiento</b></TableCell>
+						<TableCell align="left"><b>Curso</b></TableCell>
+						<TableCell align="left" ><b>Domicilio</b></TableCell>
+						<TableCell align="left"><b>Localidad</b></TableCell>
+						<TableCell align="left"><b>Teléfono</b></TableCell>
+						<TableCell align="left"><b>DNI de Tutor</b></TableCell>
+						<TableCell align="left"><b>Nombre del Tutor</b></TableCell>
+						<TableCell align="left"><b>Apellido del Tutor</b></TableCell>
+					</TableRow>
+					</TableHead>
+					<TableBody>
+					{students.length !== 0 && (
+							students.map(row => (
+								
+									<TableRow key={row.student.id}>
+										<TableCell component="th" scope="row">
+											{row.student.DNI}
+										</TableCell>
+										<TableCell align="left" >{row.student.surname}</TableCell>
+										<TableCell align="left">{row.student.name}</TableCell>
+										<TableCell align="left">{row.student.birthday}</TableCell>
+										<TableCell align="left">{row.student.course}</TableCell>
+										{/* <TableCell align="left" style={customColumnStyle}>{row.student.domicile}</TableCell> */}
+										<TableCell align="left">{row.student.domicile}</TableCell>
+										<TableCell align="left">{row.student.location}</TableCell>
+										<TableCell align="left" width="100px">{row.student.telephone}</TableCell>
+										<TableCell align="left">{row.student.tutor}</TableCell>
+										<TableCell align="left">{findTutorData(row.student.tutor, "name")}</TableCell>
+										<TableCell align="left">{findTutorData(row.student.tutor, "surname")}</TableCell>
+									</TableRow>
+								
+							))
+						)
+					}
+					</TableBody>
+				</Table>
 			<div align="center">
 				{ page !== 1 && <h3 className='nextOrBackPage' onClick={() => changePage('back') }> {`< Retroceder página`} </h3> }
 				{ !lastPage && <h3 className='nextOrBackPage' onClick={() => changePage('next') }>Avanzar página > </h3>  }
