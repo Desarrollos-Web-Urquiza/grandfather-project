@@ -54,6 +54,7 @@ const Lists = props => {
 
 	useEffect(() => {
 		async function fetchData() {
+			console.log("María de los Milagros Santos", "María de los Milagros Santos".length)
 			const studentsList = await getAll("student");
 			const tutorsList = await getAll("tutor");
 			console.log(studentsList)
@@ -126,17 +127,17 @@ const Lists = props => {
 				<Table className={classes.table}>
 					<TableHead>
 					<TableRow>
-						<TableCell><p style={{width: 30}}><b>DNI</b></p></TableCell>
-						<TableCell align="left"><p style={{width: 90}}><b>APELLIDO</b></p></TableCell>
-						<TableCell align="left"><p style={{width: 90}}><b>NOMBRE</b></p></TableCell>
-						<TableCell align="left"><p style={{width: 50}}><b>FECHA DE NACIMIENTO</b></p></TableCell>
-						<TableCell align="left"><p style={{width: 20}}><b>CURSO</b></p></TableCell>
-						<TableCell align="left" ><p style={{width: 80}}><b>DOMICILIO</b></p></TableCell>
-						<TableCell align="left"><p style={{width: 80}}><b>LOCALIDAD</b></p></TableCell>
-						<TableCell align="left"><b>TELÉFONO</b></TableCell>
-						<TableCell align="left"><p style={{width: 30}}><b>DNI DE TUTOR</b></p></TableCell>
-						<TableCell align="left"><p style={{width: 90}}><b>NOMBRE DE TUTOR</b></p></TableCell>
-						<TableCell align="left"><p style={{width: 90}}><b>APELLIDO DEL TUTOR</b></p></TableCell>
+						<TableCell><b>DNI</b></TableCell>
+						<TableCell align="left" style={{ padding: 0 }}><b>APELLIDO</b></TableCell>
+						<TableCell align="left" style={{ padding: 0 }}><b>NOMBRE</b></TableCell>
+						<TableCell align="left" width="80px" style={{ padding: 0 }}><b>FECHA DE NACIMIENTO</b></TableCell>
+						<TableCell align="left" style={{ padding: 0 }}><b>CURSO</b></TableCell>
+						<TableCell align="left" style={{ padding: 0 }} ><b>DOMICILIO</b></TableCell>
+						<TableCell align="left" style={{ padding: 0 }}><b>LOCALIDAD</b></TableCell>
+						<TableCell align="left" style={{ padding: 0 }}><b>TELÉFONO</b></TableCell>
+						<TableCell align="left" style={{ padding: 0 }}><b>DNI DE TUTOR</b></TableCell>
+						<TableCell align="left" style={{ padding: 0 }}><b>NOMBRE DE TUTOR</b></TableCell>
+						<TableCell align="left" style={{ padding: 0 }}><b>APELLIDO DEL TUTOR</b></TableCell>
 					</TableRow>
 					</TableHead>
 					<TableBody>
@@ -156,20 +157,20 @@ const Lists = props => {
 										<TableCell align="left">{row.student.tutor}</TableCell>
 										<TableCell align="left">{findTutorData(row.student.tutor, "name")}</TableCell>
 										<TableCell align="left">{findTutorData(row.student.tutor, "surname")}</TableCell> */}
-										<TableCell component="th" scope="row" >
-											<p style={{width: 30}}>{row.student.DNI}</p>
+										<TableCell component="th" scope="row" width="10px" >
+											{row.student.DNI}
 										</TableCell>
-										<TableCell align="left"><p style={{width: 90}}>{row.student.surname}</p></TableCell>
-										<TableCell align="left" ><p style={{width: 90}}>{row.student.name}</p></TableCell>
-										<TableCell align="left"><p style={{width: 50}}>{row.student.birthday}</p></TableCell>
-										<TableCell align="left"><p style={{width: 25}}>{row.student.course}</p></TableCell>
+										<TableCell align="left" width="200px" style={{ padding: 0 }} >{row.student.surname}</TableCell>
+										<TableCell align="left" width="200px" style={{ padding: 0 }}>{row.student.name}</TableCell>
+										<TableCell align="left" width="110px" style={{ padding: 0 }}>{row.student.birthday}</TableCell>
+										<TableCell align="left" width="70" style={{ padding: 0 }}>{row.student.course}</TableCell>
 										{/* <TableCell align="left" style={customColumnStyle}>{row.student.domicile}</TableCell> */}
-										<TableCell align="left"><p style={{width: 80}}>{row.student.domicile}</p></TableCell>
-										<TableCell align="left"><p style={{width: 80}}>{row.student.location}</p></TableCell>
-										<TableCell align="left" width="100px"><p style={{width: 130}}>{row.student.telephone}</p></TableCell>
-										<TableCell align="left"><p style={{width: 30}}>{row.student.tutor}</p></TableCell>
-										<TableCell align="left"><p style={{width: 90}}>{findTutorData(row.student.tutor, "name")}</p></TableCell>
-										<TableCell align="left"><p style={{width: 90}}>{findTutorData(row.student.tutor, "surname")}</p></TableCell>
+										<TableCell align="left" width="180" style={{ padding: 0 }}>{row.student.domicile}</TableCell>
+										<TableCell align="left" width="100" style={{ padding: 0 }}>{row.student.location}</TableCell>
+										<TableCell align="left" width="100" style={{ padding: 0 }} >{row.student.telephone}</TableCell>
+										<TableCell align="left" width="110px" style={{ padding: 0 }}>{row.student.tutor}</TableCell>
+										<TableCell align="left" width="200px" style={{ padding: 0 }}>{findTutorData(row.student.tutor, "name")}</TableCell>
+										<TableCell align="left" width="200px" style={{ padding: 0 }}>{findTutorData(row.student.tutor, "surname")}</TableCell>
 
 									</TableRow>
 								
