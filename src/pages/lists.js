@@ -160,15 +160,15 @@ const Lists = props => {
 										<TableCell component="th" scope="row" width="10px" >
 											{row.student.DNI}
 										</TableCell>
-										<TableCell align="left" width="200px" style={{ padding: 0 }} >{row.student.surname}</TableCell>
-										<TableCell align="left" width="200px" style={{ padding: 0 }}>{row.student.name}</TableCell>
-										<TableCell align="left" width="110px" style={{ padding: 0 }}>{row.student.birthday}</TableCell>
-										<TableCell align="left" width="70" style={{ padding: 0 }}>{row.student.course}</TableCell>
+										<TableCell align="left" width="180px" style={{ padding: 0 }} >{row.student.surname}</TableCell>
+										<TableCell align="left" width="180px" style={{ padding: 0 }}>{row.student.name}</TableCell>
+										<TableCell align="left" width="10px" style={{ padding: 0 }}>{row.student.birthday}</TableCell>
+										<TableCell align="left" width="35" style={{ padding: 0 }}>{row.student.course}</TableCell>
 										{/* <TableCell align="left" style={customColumnStyle}>{row.student.domicile}</TableCell> */}
 										<TableCell align="left" width="180" style={{ padding: 0 }}>{row.student.domicile}</TableCell>
 										<TableCell align="left" width="100" style={{ padding: 0 }}>{row.student.location}</TableCell>
 										<TableCell align="left" width="100" style={{ padding: 0 }} >{row.student.telephone}</TableCell>
-										<TableCell align="left" width="110px" style={{ padding: 0 }}>{row.student.tutor}</TableCell>
+										<TableCell align="left" width="80px" style={{ padding: 0 }}>{row.student.tutor}</TableCell>
 										<TableCell align="left" width="200px" style={{ padding: 0 }}>{findTutorData(row.student.tutor, "name")}</TableCell>
 										<TableCell align="left" width="200px" style={{ padding: 0 }}>{findTutorData(row.student.tutor, "surname")}</TableCell>
 
