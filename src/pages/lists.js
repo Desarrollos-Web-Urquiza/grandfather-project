@@ -46,7 +46,7 @@ const Lists = props => {
 	const { classes } = props;
 	const [list, setList] = useState([]);
 	const [lastPage, setLastPage] = useState(false);
-	const [amountToShow, setAmountToShow] = useState(13);
+	const [amountToShow, setAmountToShow] = useState(30);
 	const [page, setPage] = useState(1);
 	const [studentsAll, setStudentsAll] = useState([]);
 	const [students, setStudents] = useState([]);
@@ -122,63 +122,49 @@ const Lists = props => {
 				<title>Grandfather project - Listados</title>
 			</Helmet>
 			<h2 align="center"><b>Listado de alumnos y sus tutores</b></h2>
-			<p className='text-2xl' align="left">Hoja {page}</p>
+			<p className='text-2xl ml-2.5' align="left">Hoja {page}</p>
 				<div style={{width: 1800}} align="center">
-				<Table className={classes.table}>
-					<TableHead>
-					<TableRow>
-						<TableCell><b>DNI</b></TableCell>
-						<TableCell align="left" style={{ padding: 0 }}><b>APELLIDO</b></TableCell>
-						<TableCell align="left" style={{ padding: 0 }}><b>NOMBRE</b></TableCell>
-						<TableCell align="left" width="80px" style={{ padding: 0 }}><b>FECHA DE NACIMIENTO</b></TableCell>
-						<TableCell align="left" style={{ padding: 0 }}><b>CURSO</b></TableCell>
-						<TableCell align="left" style={{ padding: 0 }} ><b>DOMICILIO</b></TableCell>
-						<TableCell align="left" style={{ padding: 0 }}><b>LOCALIDAD</b></TableCell>
-						<TableCell align="left" style={{ padding: 0 }}><b>TELÉFONO</b></TableCell>
-						<TableCell align="left" style={{ padding: 0 }}><b>DNI DE TUTOR</b></TableCell>
-						<TableCell align="left" style={{ padding: 0 }}><b>NOMBRE DE TUTOR</b></TableCell>
-						<TableCell align="left" style={{ padding: 0 }}><b>APELLIDO DEL TUTOR</b></TableCell>
-					</TableRow>
-					</TableHead>
-					<TableBody>
-					{students.length !== 0 && (
-							students.map(row => (
-									<TableRow key={row.student.id}>
-										{/* <TableCell component="th" scope="row">
-											{row.student.DNI}
-										</TableCell> */}
-										{/* <TableCell align="left" className>{row.student.surname}</TableCell>
-										<TableCell align="left">{row.student.name}</TableCell>
-										<TableCell align="left">{row.student.birthday}</TableCell>
-										<TableCell align="left">{row.student.course}</TableCell>
-										<TableCell align="left">{row.student.domicile}</TableCell>
-										<TableCell align="left">{row.student.location}</TableCell>
-										<TableCell align="left" width="100px">{row.student.telephone}</TableCell>
-										<TableCell align="left">{row.student.tutor}</TableCell>
-										<TableCell align="left">{findTutorData(row.student.tutor, "name")}</TableCell>
-										<TableCell align="left">{findTutorData(row.student.tutor, "surname")}</TableCell> */}
-										<TableCell component="th" scope="row" width="10px" >
-											{row.student.DNI}
-										</TableCell>
-										<TableCell align="left" width="180px" style={{ padding: 0 }} >{row.student.surname}</TableCell>
-										<TableCell align="left" width="180px" style={{ padding: 0 }}>{row.student.name}</TableCell>
-										<TableCell align="left" width="10px" style={{ padding: 0 }}>{row.student.birthday}</TableCell>
-										<TableCell align="left" width="35" style={{ padding: 0 }}>{row.student.course}</TableCell>
-										{/* <TableCell align="left" style={customColumnStyle}>{row.student.domicile}</TableCell> */}
-										<TableCell align="left" width="180" style={{ padding: 0 }}>{row.student.domicile}</TableCell>
-										<TableCell align="left" width="100" style={{ padding: 0 }}>{row.student.location}</TableCell>
-										<TableCell align="left" width="100" style={{ padding: 0 }} >{row.student.telephone}</TableCell>
-										<TableCell align="left" width="80px" style={{ padding: 0 }}>{row.student.tutor}</TableCell>
-										<TableCell align="left" width="200px" style={{ padding: 0 }}>{findTutorData(row.student.tutor, "name")}</TableCell>
-										<TableCell align="left" width="200px" style={{ padding: 0 }}>{findTutorData(row.student.tutor, "surname")}</TableCell>
+					<Table className={classes.table}>
+						<TableHead>
+						<TableRow>
+							<TableCell align="left" style={{ padding: 0 }}><b>DNI</b></TableCell>
+							<TableCell align="left" style={{ padding: 0 }}><b>APELLIDO</b></TableCell>
+							<TableCell align="left" style={{ padding: 0 }}><b>NOMBRE</b></TableCell>
+							<TableCell align="left" width="5px" style={{ padding: 0 }}><b>FECHA NAC.</b></TableCell>
+							<TableCell align="left" width="25px" style={{ padding: 0 }}><b style={{ wordBreak: "break-all" }}>CURSO</b></TableCell>
+							<TableCell align="left" style={{ padding: 0 }} ><b>DOMICILIO</b></TableCell>
+							<TableCell align="left" style={{ padding: 0 }}><b>LOCALIDAD</b></TableCell>
+							<TableCell align="left" style={{ padding: 0 }}><b>TELÉFONO</b></TableCell>
+							<TableCell align="left" width="20px" style={{ padding: 0 }}><b>DNI DE TUTOR</b></TableCell>
+							<TableCell align="left" style={{ padding: 0 }}><b>NOMBRE DE TUTOR</b></TableCell>
+							<TableCell align="left" style={{ padding: 0 }}><b>APELLIDO DEL TUTOR</b></TableCell>
+						</TableRow>
+						</TableHead>
+						<TableBody>
+						{students.length !== 0 && (
+								students.map(row => (
+										<TableRow key={row.student.id}>
+											<TableCell component="th" scope="row" width="5px" style={{ padding: 0 }}>
+												{row.student.DNI}
+											</TableCell>
+											<TableCell align="left" width="170px" style={{ padding: 0 }} >{row.student.surname}</TableCell>
+											<TableCell align="left" width="170px" style={{ padding: 0 }}>{row.student.name}</TableCell>
+											<TableCell align="left" width="5px" style={{ padding: 0 }}>{row.student.birthday}</TableCell>
+											<TableCell align="left" width="25px" style={{ padding: 0 }}>{row.student.course}</TableCell>
+											<TableCell align="left" width="130px" style={{ padding: 0 }}>{row.student.domicile}</TableCell>
+											<TableCell align="left" width="135px" style={{ padding: 0 }}>{row.student.location}</TableCell>
+											<TableCell align="left" width="130px" style={{ padding: 0 }} >{row.student.telephone}</TableCell>
+											<TableCell align="left" width="20px" style={{ padding: 0 }}>{row.student.tutor}</TableCell>
+											<TableCell align="left" width="156px" style={{ padding: 0 }}>{findTutorData(row.student.tutor, "name")}</TableCell>
+											<TableCell align="left" width="200px" style={{ padding: 0 }}>{findTutorData(row.student.tutor, "surname")}</TableCell>
 
-									</TableRow>
-								
-								))
-								)
-							}
-					</TableBody>
-				</Table>
+										</TableRow>
+									
+									))
+									)
+								}
+						</TableBody>
+					</Table>
 				</div>
 			<div align="center">
 				{ page !== 1 && <h3 className='nextOrBackPage' onClick={() => changePage('back') }> {`< Retroceder página`} </h3> }
