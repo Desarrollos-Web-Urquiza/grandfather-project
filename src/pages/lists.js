@@ -11,6 +11,8 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import TextField from '@material-ui/core/TextField';
+
 
 const styles = theme => ({
 	root: {
@@ -33,11 +35,6 @@ const GlobalCss = withStyles({
   },
 })(() => null);
 
-// let id = 0;
-// function createData(DNI, surname, fat, carbs, protein) {
-// 	id += 1;
-// 	return { id, DNI, surname, fat, carbs, protein };
-// }
 const customColumnStyle = {
     width: "200px",
 };
@@ -74,10 +71,31 @@ const Lists = props => {
 		// ))
 	},[]);
 
-	const changePage = (nextOrBack) =>{ 
+	const changePage = (action) =>{ 
+		action = action.target.value
+		console.log('action', action)
+		console.log('page', page)
+		let numberOfPage = page
+		console.log('numberOfPage', numberOfPage)
+		numberOfPage--
+		if(action === "" || action > 3 || action < 1 || numberOfPage === 0)
+			return
+		action = parseInt(action)
+		console.log('action', action)
 		let newPage 
+		if(action === 1){
+			newPage = "next"
+		}
+		if(action === 2){
+			console.log('inside IF 2')
+			newPage = "back" 
+		}
+		if(action === 3){
+			props.history.push('/')
+			return
+		}
 		// console.log(page)
-		if(nextOrBack === "next"){
+		if(action === "next"){
 			newPage = page + 1 
 		}	else {
 			newPage = page - 1 
@@ -120,95 +138,103 @@ const Lists = props => {
 				<title>Grandfather project - Listados</title>
 			</Helmet>
 			<h2 align="center"><b>Listado de alumnos y sus tutores</b></h2>
-			<p className='text-2xl ml-2.5' align="left">Hoja {page}</p>
-				<div style={{width: 1175}} align="center">
-					<Table className={classes.table}>
-						<TableHead>
-						<TableRow>
-							<TableCell align="left" style={{ padding: 0 }}>
-								<b>DNI-ALUM</b>
-								<br/>
-								<b>DNI-TUTOR</b>
-							</TableCell>
-							<TableCell align="left" style={{ padding: 0 }}>
-								<b>APELLIDO-ALUM</b>
-								<br/>
-								<b>APELLIDO-TUTOR</b>
-							</TableCell>
-							<TableCell align="left" style={{ padding: 0 }}>
-								<b>NOMBRE-ALUM</b>
-								<br/>
-								<b>NOMBRE-TUTOR</b>
-							</TableCell>
-							<TableCell align="left" width="5px" style={{ padding: 0 }}><b>NAC.</b></TableCell>
-							<TableCell align="left" width="25px" style={{ padding: 0 }}><b>CUR.</b></TableCell>
-							<TableCell align="left" style={{ padding: 0 }} ><b>DOMICILIO</b></TableCell>
-							<TableCell align="left" style={{ padding: 0 }}><b>LOCALIDAD</b></TableCell>
-							<TableCell align="left" style={{ padding: 0 }}><b>TELÉFONO</b></TableCell>
-							{/* <TableCell align="left" width="20px" style={{ padding: 0 }}><b>DNI DE TUTOR</b></TableCell>
-							<TableCell align="left" style={{ padding: 0 }}><b>NOMBRE DE TUTOR</b></TableCell>
-							<TableCell align="left" style={{ padding: 0 }}><b>APELLIDO DEL TUTOR</b></TableCell> */}
-						</TableRow>
-						</TableHead>
-						<TableBody>
-						{students.length !== 0 && (
-								students.map(row => (
-										<TableRow key={row.student.id}>
-											<TableCell component="th" scope="row" width="5px" style={{ padding: 0 }}>
-												{row.student.DNI}
-												<br/>
-												{row.student.tutor}
-											</TableCell>
-											<TableCell align="left" width="160px" style={{ padding: 0 }} >
-												{row.student.surname}
-												<br/>
-												{findTutorData(row.student.tutor, "surname")}
-											</TableCell>
-											<TableCell align="left" width="160px" style={{ padding: 0 }}>
-												{row.student.name}
-												<br/>
-												{findTutorData(row.student.tutor, "name")}
-											</TableCell>
-											<TableCell align="left" width="5px" style={{ padding: 0 }}>
-												{row.student.birthday}
-												<br/>
-												-
-											</TableCell>
-											<TableCell align="left" width="25px" style={{ padding: 0 }}>
-												{row.student.course}
-												<br/>
-												-
-											</TableCell>
-											<TableCell align="left" width="140px" style={{ padding: 0 }}>
-												{row.student.domicile}
-												<br/>
-												-
-											</TableCell>
-											<TableCell align="left" width="135px" style={{ padding: 0 }}>
-												{row.student.location}
-												<br/>
-												-
-											</TableCell>
-											<TableCell align="left" width="130px" style={{ padding: 0 }} >
-												{row.student.telephone}
-												<br/>
-												-
-											</TableCell>
-											{/* <TableCell align="left" width="20px" style={{ padding: 0 }}>{row.student.tutor}</TableCell>
-											<TableCell align="left" width="156px" style={{ padding: 0 }}>{findTutorData(row.student.tutor, "name")}</TableCell>
-											<TableCell align="left" width="200px" style={{ padding: 0 }}>{findTutorData(row.student.tutor, "surname")}</TableCell> */}
+			<div style={{width: 1175}} className='-mt-4' align="center">
+				<p className='text-2xl ml-2.5' align="right">Hoja {page}</p>
+				<Table className={classes.table}>
+					<TableHead>
+					<TableRow>
+						<TableCell align="left" style={{ padding: 0 }}>
+							<b>DNI-ALUM</b>
+							<br/>
+							<b>DNI-TUTOR</b>
+						</TableCell>
+						<TableCell align="left" style={{ padding: 0 }}>
+							<b>APELLIDO-ALUM</b>
+							<br/>
+							<b>APELLIDO-TUTOR</b>
+						</TableCell>
+						<TableCell align="left" style={{ padding: 0 }}>
+							<b>NOMBRE-ALUM</b>
+							<br/>
+							<b>NOMBRE-TUTOR</b>
+						</TableCell>
+						<TableCell align="left" width="5px" style={{ padding: 0 }}><b>NAC.</b></TableCell>
+						<TableCell align="left" width="25px" style={{ padding: 0 }}><b>CUR.</b></TableCell>
+						<TableCell align="left" style={{ padding: 0 }} ><b>DOMICILIO</b></TableCell>
+						<TableCell align="left" style={{ padding: 0 }}><b>LOCALIDAD</b></TableCell>
+						<TableCell align="left" style={{ padding: 0 }}><b>TELÉFONO</b></TableCell>
+						{/* <TableCell align="left" width="20px" style={{ padding: 0 }}><b>DNI DE TUTOR</b></TableCell>
+						<TableCell align="left" style={{ padding: 0 }}><b>NOMBRE DE TUTOR</b></TableCell>
+						<TableCell align="left" style={{ padding: 0 }}><b>APELLIDO DEL TUTOR</b></TableCell> */}
+					</TableRow>
+					</TableHead>
+					<TableBody>
+					{students.length !== 0 && (
+							students.map(row => (
+									<TableRow key={row.student.id}>
+										<TableCell component="th" scope="row" width="5px" style={{ padding: 0 }}>
+											{row.student.DNI}
+											<br/>
+											{row.student.tutor}
+										</TableCell>
+										<TableCell align="left" width="160px" style={{ padding: 0 }} >
+											{row.student.surname}
+											<br/>
+											{findTutorData(row.student.tutor, "surname")}
+										</TableCell>
+										<TableCell align="left" width="160px" style={{ padding: 0 }}>
+											{row.student.name}
+											<br/>
+											{findTutorData(row.student.tutor, "name")}
+										</TableCell>
+										<TableCell align="left" width="5px" style={{ padding: 0 }}>
+											{row.student.birthday}
+											<br/>
+											-
+										</TableCell>
+										<TableCell align="left" width="25px" style={{ padding: 0 }}>
+											{row.student.course}
+											<br/>
+											-
+										</TableCell>
+										<TableCell align="left" width="140px" style={{ padding: 0 }}>
+											{row.student.domicile}
+											<br/>
+											-
+										</TableCell>
+										<TableCell align="left" width="135px" style={{ padding: 0 }}>
+											{row.student.location}
+											<br/>
+											-
+										</TableCell>
+										<TableCell align="left" width="130px" style={{ padding: 0 }} >
+											{row.student.telephone}
+											<br/>
+											-
+										</TableCell>
+										{/* <TableCell align="left" width="20px" style={{ padding: 0 }}>{row.student.tutor}</TableCell>
+										<TableCell align="left" width="156px" style={{ padding: 0 }}>{findTutorData(row.student.tutor, "name")}</TableCell>
+										<TableCell align="left" width="200px" style={{ padding: 0 }}>{findTutorData(row.student.tutor, "surname")}</TableCell> */}
 
-										</TableRow>
-									
-									))
-									)
-								}
-						</TableBody>
-					</Table>
-				</div>
+									</TableRow>
+								
+								))
+								)
+							}
+					</TableBody>
+				</Table>
+			</div>
 			<div align="center">
 				{ page !== 1 && <h3 className='nextOrBackPage' onClick={() => changePage('back') }> {`< Retroceder página`} </h3> }
 				{ !lastPage && <h3 className='nextOrBackPage' onClick={() => changePage('next') }>Avanzar página > </h3>  }
+				<TextField 
+					variant="outlined" 
+					style={{marginBottom: 50, width: 200 }} 
+					type="text"
+					InputProps={{ inputProps: { min: 0, max: 3 } }}
+					onChange={e => changePage(e)}
+					autoFocus={true}
+				/>
 			</div>
 		</div>
 	)
