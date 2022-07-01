@@ -79,7 +79,7 @@ const Lists = props => {
 		// let numberOfPage = page
 		// numberOfPage--
 		// console.log('numberOfPage', numberOfPage)
-		if(action === "" || action > 3 || action < 1 || page === 0)
+		if(action === "" || action > 3 || action < 1)
 			return
 		action = parseInt(action)
 		console.log('action', action)
@@ -102,6 +102,10 @@ const Lists = props => {
 		}	
 		if(action === "back"){
 			newPage = page - 1 
+			if(newPage === 0){
+				newPage = page  + 1
+				return 
+			}
 		}
 		console.log(newPage)
 		let final = amountToShow * newPage
