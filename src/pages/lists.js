@@ -71,24 +71,26 @@ const Lists = props => {
 		// ))
 	},[]);
 
-	const changePage = (action) =>{ 
-		action = action.target.value
+	const changePage = (event) =>{ 
+		let action = event.target.value
+		event.target.value = ''
 		console.log('action', action)
 		console.log('page', page)
-		let numberOfPage = page
-		console.log('numberOfPage', numberOfPage)
-		numberOfPage--
-		if(action === "" || action > 3 || action < 1 || numberOfPage === 0)
+		// let numberOfPage = page
+		// numberOfPage--
+		// console.log('numberOfPage', numberOfPage)
+		if(action === "" || action > 3 || action < 1 || page === 0)
 			return
 		action = parseInt(action)
 		console.log('action', action)
 		let newPage 
 		if(action === 1){
-			newPage = "next"
+			console.log('next')
+			action = "next"
 		}
 		if(action === 2){
 			console.log('inside IF 2')
-			newPage = "back" 
+			action = "back" 
 		}
 		if(action === 3){
 			props.history.push('/')
@@ -97,7 +99,8 @@ const Lists = props => {
 		// console.log(page)
 		if(action === "next"){
 			newPage = page + 1 
-		}	else {
+		}	
+		if(action === "back"){
 			newPage = page - 1 
 		}
 		console.log(newPage)
@@ -225,8 +228,14 @@ const Lists = props => {
 				</Table>
 			</div>
 			<div align="center">
-				{ page !== 1 && <h3 className='nextOrBackPage' onClick={() => changePage('back') }> {`< Retroceder página`} </h3> }
-				{ !lastPage && <h3 className='nextOrBackPage' onClick={() => changePage('next') }>Avanzar página > </h3>  }
+				{/* { page !== 1 && <h3 className='nextOrBackPage' onClick={() => changePage('back') }> {`< Retroceder página`} </h3> }
+				{ !lastPage && <h3 className='nextOrBackPage' onClick={() => changePage('next') }>Avanzar página > </h3>  } */}
+				<div id="div-options" className="flex flex-col justify-initial w-32">
+					<p>1 Avanzar página</p>
+					<p>2 Retroceder página</p>
+					<p>3 Volver</p>
+				</div>
+				<br />
 				<TextField 
 					variant="outlined" 
 					style={{marginBottom: 50, width: 200 }} 
