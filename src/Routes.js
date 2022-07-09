@@ -13,7 +13,7 @@ const Routes = () => {
 				<Route exact path='/' component={ Home } />					
 				<Route exact path='/ingresoClave/:operationNumber' component={ KeyEntry } />					
 				<Route exact path='/alumnoAlta/:DNI' component={ Create } />					
-				<Route exact path='/lists' component={ Lists } />					
+				<Route exact path='/lists/:listType' component={ Lists } />					
 				<Route exact path='/fin' component={ End } />					
 			</Switch>
 		</BrowserRouter>

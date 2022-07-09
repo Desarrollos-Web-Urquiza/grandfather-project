@@ -45,7 +45,7 @@ const Home = props => {
 			setErr("Error: Los datos están vacíos")
 		}	else {
 			if(data === "4"){
-				props.history.push('/lists')
+				props.history.push('/lists/5')
 			}else{
 				props.history.push('/ingresoClave/' + data)
 			}

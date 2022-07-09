@@ -13,7 +13,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TextField from '@material-ui/core/TextField';
 
-
 const styles = theme => ({
 	root: {
 	  width: '100%',
@@ -48,37 +47,63 @@ const Lists = props => {
 	const [studentsAll, setStudentsAll] = useState([]);
 	const [students, setStudents] = useState([]);
 	const [tutors, setTutors] = useState([]);
+	const [listType, setListType] = useState(4);
 
 	useEffect(() => {
 		async function fetchData() {
 			const studentsList = await getAll("student");
-			const tutorsList = await getAll("tutor");
-			// console.log(studentsList)
-			// console.log(tutorsList)
+			const tutorsList = await getAll("tutor")
 			setStudentsAll(studentsList)
 			setTutors(tutorsList)
 			let studentsToShow = []
 			for (let index = 0; index < amountToShow; index++) {
 				studentsToShow[index]	=  	studentsList[index]
 			}
+			console.log('studentsToShow', studentsToShow)
 			setStudents(studentsToShow)
+			defineListType(studentsToShow)
 			if(studentsList.length < 8)
 				setLastPage(true)
-		}
-		fetchData();
-		// list.map(item => (
-		// 	rows.createData(item.DNI)
-		// ))
+			}
+		fetchData()
 	},[]);
+
+	const defineListType = (studentsToShow) =>{ 
+		let semiParams = window.location.href.split('/')
+		let paramsFinished = semiParams[4]
+		console.log('paramsFinished', paramsFinished)
+		switch (paramsFinished) {
+			case "5"://sort by surname
+				setListType(5)
+				sortItems("surname", studentsToShow)
+				break;
+			default:
+				setListType(4)//default order
+		}
+	}
+
+	const sortItems = (orderBy, studentsToShow) =>{ 
+		const sortArray = (a, b) => {
+			var reA = /[^a-zA-Z]/g;
+			var reN = /[^0-9]/g;
+			console.log('a', a)
+			var aA = a.student[orderBy].replace(reA, "");
+			var bA = b.student[orderBy].replace(reA, "");
+			if (aA === bA) {
+			var aN = parseInt(a.student[orderBy].replace(reN, ""), 10);
+			var bN = parseInt(b.student[orderBy].replace(reN, ""), 10);
+			return aN === bN ? 0 : aN < bN ? 1 : -1;
+			} else {
+			return aA < bA ? 1 : -1;
+			}
+		}
+		studentsToShow.sort(sortArray)
+		setStudents(studentsToShow)
+	}
 
 	const changePage = (event) =>{ 
 		let action = event.target.value
 		event.target.value = ''
-		console.log('action', action)
-		console.log('page', page)
-		// let numberOfPage = page
-		// numberOfPage--
-		// console.log('numberOfPage', numberOfPage)
 		if(action === "" || action > 3 || action < 1)
 			return
 		action = parseInt(action)
@@ -96,7 +121,6 @@ const Lists = props => {
 			props.history.push('/')
 			return
 		}
-		// console.log(page)
 		if(action === "next"){
 			newPage = page + 1 
 		}	
@@ -107,13 +131,13 @@ const Lists = props => {
 				return 
 			}
 		}
-		console.log(newPage)
+		// console.log(newPage)
 		let final = amountToShow * newPage
 		let initial = final - amountToShow
 		let studentsToShow = []
-		console.log(initial)
-		console.log(final)
-		console.log(studentsAll.length)
+		// console.log(initial)
+		// console.log(final)
+		// console.log(studentsAll.length)
 		if(final >= studentsAll.length ){
 			setLastPage(true)
 			final = studentsAll.length
@@ -219,12 +243,7 @@ const Lists = props => {
 											<br/>
 											-
 										</TableCell>
-										{/* <TableCell align="left" width="20px" style={{ padding: 0 }}>{row.student.tutor}</TableCell>
-										<TableCell align="left" width="156px" style={{ padding: 0 }}>{findTutorData(row.student.tutor, "name")}</TableCell>
-										<TableCell align="left" width="200px" style={{ padding: 0 }}>{findTutorData(row.student.tutor, "surname")}</TableCell> */}
-
 									</TableRow>
-								
 								))
 								)
 							}
@@ -232,8 +251,6 @@ const Lists = props => {
 				</Table>
 			</div>
 			<div align="center">
-				{/* { page !== 1 && <h3 className='nextOrBackPage' onClick={() => changePage('back') }> {`< Retroceder página`} </h3> }
-				{ !lastPage && <h3 className='nextOrBackPage' onClick={() => changePage('next') }>Avanzar página > </h3>  } */}
 				<div id="div-options" className="flex flex-col justify-initial w-32">
 					<p>1 Avanzar página</p>
 					<p>2 Retroceder página</p>
