@@ -44,8 +44,8 @@ const Home = props => {
 		if(data == ""){
 			setErr("Error: Los datos están vacíos")
 		}	else {
-			if(data === "4"){
-				props.history.push('/lists/5')
+			if(data === "4" || data === "5"){
+				props.history.push('/lists/' + data)
 			}else{
 				props.history.push('/ingresoClave/' + data)
 			}
@@ -60,12 +60,13 @@ const Home = props => {
 			<h2 align="center">ALUMNADO</h2>
 			<div align="center"  >
 				<div className="card-container">
-					<div id="div-options" align="left" className="flex flex-col justify-initial w-32">
+					<div id="div-options" align="left" className="flex flex-col justify-initial w-40">
 						<p>1 Altas</p>
 						<p>2 Modificaciones</p>
 						<p>3 Bajas</p>
 						<p>4 Listados</p>
-						<p>5 Fin</p>
+						<p>5 Listado ordenado alfabéticamente</p>
+						<p>6 Fin</p>
 					</div>
 					<br />
 					<br />	

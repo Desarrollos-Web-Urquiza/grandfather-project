@@ -51,20 +51,23 @@ const Lists = props => {
 
 	useEffect(() => {
 		async function fetchData() {
-			const studentsList = await getAll("student");
+			let studentsList = await getAll("student");
 			const tutorsList = await getAll("tutor")
-			setStudentsAll(studentsList)
 			setTutors(tutorsList)
-			let studentsToShow = []
+			// setStudentsAll(studentsList)
+			// setStudents(studentsToShow)
+			let studentsToShow =  []
+			studentsList = defineListType(studentsList)
+			setStudentsAll(studentsList)
+			console.log('studentsToShow 1', studentsToShow)
 			for (let index = 0; index < amountToShow; index++) {
 				studentsToShow[index]	=  	studentsList[index]
 			}
-			console.log('studentsToShow', studentsToShow)
+			console.log('studentsToShow 2', studentsToShow)
 			setStudents(studentsToShow)
-			defineListType(studentsToShow)
 			if(studentsList.length < 8)
 				setLastPage(true)
-			}
+		}
 		fetchData()
 	},[]);
 
@@ -75,14 +78,17 @@ const Lists = props => {
 		switch (paramsFinished) {
 			case "5"://sort by surname
 				setListType(5)
-				sortItems("surname", studentsToShow)
-				break;
+				return sortItems("surname", studentsToShow)
+				// break;
 			default:
 				setListType(4)//default order
+				// setStudentsAll(studentsToShow)
+				return studentsToShow
 		}
 	}
 
 	const sortItems = (orderBy, studentsToShow) =>{ 
+		console.log('studentsToShow', studentsToShow)
 		const sortArray = (a, b) => {
 			var reA = /[^a-zA-Z]/g;
 			var reN = /[^0-9]/g;
@@ -92,13 +98,15 @@ const Lists = props => {
 			if (aA === bA) {
 			var aN = parseInt(a.student[orderBy].replace(reN, ""), 10);
 			var bN = parseInt(b.student[orderBy].replace(reN, ""), 10);
-			return aN === bN ? 0 : aN < bN ? 1 : -1;
+			return bN ===  aN ? 0 : aN < bN ? 1 : -1;
 			} else {
-			return aA < bA ? 1 : -1;
+			return bA < aA  ? 1 : -1;
 			}
 		}
-		studentsToShow.sort(sortArray)
-		setStudents(studentsToShow)
+		let newStudentsToShow = studentsToShow.sort(sortArray)
+		console.log(newStudentsToShow)
+		// setStudentsAll(newStudentsToShow)
+		return newStudentsToShow
 	}
 
 	const changePage = (event) =>{ 
@@ -168,7 +176,8 @@ const Lists = props => {
 			<Helmet>
 				<title>Grandfather project - Listados</title>
 			</Helmet>
-			<h2 align="center"><b>Listado de alumnos y sus tutores</b></h2>
+			<h2 align="center">{listType === 4 && <b>Listado de alumnos y sus tutores</b>}</h2>
+			<h2 align="center">{listType === 5 && <b>Listado de alumnos ordenados alfabéticamente</b>}</h2>
 			<div style={{width: 1175}} className='-mt-4' align="center">
 				<p className='text-2xl ml-2.5' align="right">Hoja {page}</p>
 				<Table className={classes.table}>
@@ -177,17 +186,17 @@ const Lists = props => {
 						<TableCell align="left" style={{ padding: 0 }}>
 							<b>DNI-ALUM</b>
 							<br/>
-							<b>DNI-TUTOR</b>
+							{listType === 4 && <b>DNI-TUTOR</b>}
 						</TableCell>
 						<TableCell align="left" style={{ padding: 0 }}>
 							<b>APELLIDO-ALUM</b>
 							<br/>
-							<b>APELLIDO-TUTOR</b>
+							{listType === 4 && <b>APELLIDO-TUTOR</b>}
 						</TableCell>
 						<TableCell align="left" style={{ padding: 0 }}>
 							<b>NOMBRE-ALUM</b>
 							<br/>
-							<b>NOMBRE-TUTOR</b>
+							{listType === 4 && <b>NOMBRE-TUTOR</b>}
 						</TableCell>
 						<TableCell align="left" width="5px" style={{ padding: 0 }}><b>NAC.</b></TableCell>
 						<TableCell align="left" width="25px" style={{ padding: 0 }}><b>CUR.</b></TableCell>
@@ -206,42 +215,42 @@ const Lists = props => {
 										<TableCell component="th" scope="row" width="5px" style={{ padding: 0 }}>
 											{row.student.DNI}
 											<br/>
-											{row.student.tutor}
+											{listType === 4 && row.student.tutor}
 										</TableCell>
 										<TableCell align="left" width="160px" style={{ padding: 0 }} >
 											{row.student.surname}
 											<br/>
-											{findTutorData(row.student.tutor, "surname")}
+											{listType === 4 && findTutorData(row.student.tutor, "surname")}
 										</TableCell>
 										<TableCell align="left" width="160px" style={{ padding: 0 }}>
 											{row.student.name}
 											<br/>
-											{findTutorData(row.student.tutor, "name")}
+											{listType === 4 && findTutorData(row.student.tutor, "name")}
 										</TableCell>
 										<TableCell align="left" width="5px" style={{ padding: 0 }}>
 											{row.student.birthday}
 											<br/>
-											-
+											{listType === 4 && <p>-</p>}
 										</TableCell>
 										<TableCell align="left" width="25px" style={{ padding: 0 }}>
 											{row.student.course}
 											<br/>
-											-
+											{listType === 4 && <p>-</p>}
 										</TableCell>
 										<TableCell align="left" width="140px" style={{ padding: 0 }}>
 											{row.student.domicile}
 											<br/>
-											-
+											{listType === 4 && <p>-</p>}
 										</TableCell>
 										<TableCell align="left" width="135px" style={{ padding: 0 }}>
 											{row.student.location}
 											<br/>
-											-
+											{listType === 4 && <p>-</p>}
 										</TableCell>
 										<TableCell align="left" width="130px" style={{ padding: 0 }} >
 											{row.student.telephone}
 											<br/>
-											-
+											{listType === 4 && <p>-</p>}
 										</TableCell>
 									</TableRow>
 								))
