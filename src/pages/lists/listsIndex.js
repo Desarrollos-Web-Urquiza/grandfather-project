@@ -30,8 +30,8 @@ const Home = props => {
 			e.target.value = ""
 			return
 		}
-		if((operationNumber < 1 || operationNumber > 5) && e.target.value != "")	{
-			setErr("Error: Debe ingresar un número del 1 a 5")
+		if((operationNumber < 1 || operationNumber > 2) && e.target.value != "")	{
+			setErr("Error: Debe ingresar un número del 1 a 2")
 			e.target.value = ""
 			return
 		}	else	{
@@ -44,13 +44,11 @@ const Home = props => {
 		if(data == ""){
 			setErr("Error: Los datos están vacíos")
 		}	else {
-			if(data === "4"){
-				props.history.push('/lists-index')
-			}else if(data === "5"){
-				props.history.push('/fin')
-			}	else{
-				props.history.push('/ingresoClave/' + data)
-			}
+			if(data == "1")
+				data = 4
+			if(data == "2")
+				data = 5
+			props.history.push('/lists/' + data)
 		}
 	}
 
@@ -59,15 +57,12 @@ const Home = props => {
 			<Helmet>
 				<title>Grandfather project - Índice alumnos</title>
 			</Helmet>
-			<h2 align="center">ALUMNADO</h2>
+			<h2 align="center">LISTADOS ALUMNOS</h2>
 			<div align="center"  >
 				<div className="card-container">
 					<div id="div-options" align="left" className="flex flex-col justify-initial w-40">
-						<p>1 Altas</p>
-						<p>2 Modificaciones</p>
-						<p>3 Bajas</p>
-						<p>4 Listados</p>
-						<p>5 Fin</p>
+						<p>1 Listado por defecto</p>
+						<p>2 Listado ordenado alfabéticamente</p>
 					</div>
 					<br />
 					<br />	

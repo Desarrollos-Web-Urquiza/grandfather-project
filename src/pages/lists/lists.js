@@ -3,7 +3,7 @@
 /* LISTADOS*/
 import React, {useState, useEffect}  from 'react';
 import { Helmet } from "react-helmet";
-import { getAll } from "../db/functions/dbUtils";
+import { getAll } from "../../db/functions/dbUtils";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
