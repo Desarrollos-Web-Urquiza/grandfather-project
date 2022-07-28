@@ -180,7 +180,7 @@ const Lists = props => {
 				<title>Grandfather project - Listados</title>
 			</Helmet>
 			<h1>ALUMNADO</h1>
-			<h2 align="center">{listType === 4 && <p>Listado de alumnos por numero de documentos con sus tutores</p>}</h2>
+			<h2 align="center">{listType === 4 && <p>Listado de alumnos por número de documento con sus tutores</p>}</h2>
 			<h2 align="center">{listType === 5 && <p>Listado de alumnos por apellido</p>}</h2>
 			<div style={{width: 1175}} className='-mt-4' align="center">
 				<p className='text-2xl ml-2.5' align="right">Hoja {page}</p>
