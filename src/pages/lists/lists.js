@@ -42,7 +42,7 @@ const Lists = props => {
 	const { classes } = props;
 	const [list, setList] = useState([]);
 	const [lastPage, setLastPage] = useState(false);
-	const [amountToShow, setAmountToShow] = useState(15);
+	const [amountToShow, setAmountToShow] = useState(10);
 	const [page, setPage] = useState(1);
 	const [studentsAll, setStudentsAll] = useState([]);
 	const [students, setStudents] = useState([]);
@@ -67,6 +67,9 @@ const Lists = props => {
 			setStudents(studentsToShow)
 			if(studentsList.length < 8)
 				setLastPage(true)
+			//go to down
+			let down = window.innerHeight + 100000
+			window.scrollBy(0, down)
 		}
 		fetchData()
 	},[]);
@@ -176,8 +179,9 @@ const Lists = props => {
 			<Helmet>
 				<title>Grandfather project - Listados</title>
 			</Helmet>
-			<h2 align="center">{listType === 4 && <b>Listado de alumnos y sus tutores</b>}</h2>
-			<h2 align="center">{listType === 5 && <b>Listado de alumnos ordenados alfabéticamente</b>}</h2>
+			<h1>ALUMNADO</h1>
+			<h2 align="center">{listType === 4 && <p>Listado de alumnos por numero de documentos con sus tutores</p>}</h2>
+			<h2 align="center">{listType === 5 && <p>Listado de alumnos por apellido</p>}</h2>
 			<div style={{width: 1175}} className='-mt-4' align="center">
 				<p className='text-2xl ml-2.5' align="right">Hoja {page}</p>
 				<Table className={classes.table}>
@@ -260,7 +264,7 @@ const Lists = props => {
 				</Table>
 			</div>
 			<div align="center">
-				<div id="div-options" className="flex flex-col justify-initial w-32">
+				<div id="div-options" align="left" className="flex flex-col justify-initial w-32">
 					<p>1 Avanzar página</p>
 					<p>2 Retroceder página</p>
 					<p>3 Volver</p>

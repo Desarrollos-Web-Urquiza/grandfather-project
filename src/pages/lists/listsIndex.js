@@ -57,12 +57,12 @@ const Home = props => {
 			<Helmet>
 				<title>Grandfather project - Índice alumnos</title>
 			</Helmet>
-			<h2 align="center">LISTADOS ALUMNOS</h2>
 			<div align="center"  >
+				<h2 align="center">ALUMNADO - LISTADOS</h2>
 				<div className="card-container">
 					<div id="div-options" align="left" className="flex flex-col justify-initial w-40">
-						<p>1 Listado por defecto</p>
-						<p>2 Listado ordenado alfabéticamente</p>
+						<p>1 Listado por número de documento</p>
+						<p>2 Listado por apellido</p>
 					</div>
 					<br />
 					<br />	
