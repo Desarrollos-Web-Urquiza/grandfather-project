@@ -47,25 +47,31 @@ const DataInput =  (props) => {
             if(props.id == "DNItutor"){
                 let existsTutor =  await search("tutor", props.document.getElementById(orderOfFields[6]).value)
                 //verify if exitis previus text in inputs
-                if(props.document.getElementById(orderOfFields[7]).value === "" && props.document.getElementById(orderOfFields[8]).value === ""){
+                // if(props.document.getElementById(orderOfFields[7]).value === "" && props.document.getElementById(orderOfFields[8]).value === ""){
+                    console.log('existsTutor', existsTutor)
                     //verify if exitis tutor in database
-                    if(existsTutor.exitence === 0){
+                    if(existsTutor === 0){
                         props.document.getElementById(orderOfFields[7]).focus()
                     }	else{
+                        console.log('props.spinner', props.spinner)
+                        props.spinner(true)
                         //filling the inputs with the text
-                        console.log(existsTutor.data.tutor.surname)
-                        console.log(existsTutor.doc.id)
-                        props.document.getElementById(orderOfFields[7]).value = existsTutor.data.tutor.surname
-                        props.document.getElementById(orderOfFields[8]).value = existsTutor.data.tutor.name
+                        console.log(existsTutor.data?.tutor?.surname)
+                        // console.log(existsTutor.doc.id)
+                        props.document.getElementById(orderOfFields[7]).value = existsTutor.data?.tutor.surname
+                        props.document.getElementById(orderOfFields[8]).value = existsTutor.data?.tutor.name
                         props.setData({ 
                             ...props.state, 
-                            surnameTutor: existsTutor.data.tutor.surname, 
-                            nameTutor: existsTutor.data.tutor.name
+                            surnameTutor: existsTutor.data?.tutor.surname, 
+                            nameTutor: existsTutor.data?.tutor.name
                         })
+                        setTimeout(() => {
+                            props.setConfirmationMode(true)
+                            props.spinner(false)
+                        }, 5000);
                     }
-                }   else{
-                    props.setConfirmationMode(true)
-                }
+                // }   else{
+                // }
             }
             if(props.id == "surnameTutor"){
                 if(evaluateCharacters(event.target.value) && evaluateCharacters(props.document.getElementById("surnameTutor").value))

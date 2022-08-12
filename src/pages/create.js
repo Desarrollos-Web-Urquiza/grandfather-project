@@ -6,6 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { add, search, update } from "../db/functions/dbUtils";
 import DataInput from "../components/dataInput";
 import TextField from '@material-ui/core/TextField';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const CardSelect = withStyles((theme) => ({
   root: {
@@ -23,6 +24,7 @@ const Create = props => {
 	const [err, setErr] = useState(false);
 	const [confirmationMode, setConfirmationMode] = useState(false);	
 	const [correctionMode, setCorrectionMode] = useState(false);	
+	const [spinner, setSpinner] = useState(false);	
 
 	useEffect(() => {
 		let semiParams = window.location.href.split('/')
@@ -348,6 +350,7 @@ const Create = props => {
 									submit={validationData} 
 									document={document}
 									setConfirmationMode={setConfirmationMode}
+									spinner={setSpinner}
 									maxLength={8}
 								/>
 								<DataInput 
@@ -378,6 +381,7 @@ const Create = props => {
 								/>
 							</div>
 						}
+						{spinner && <CircularProgress />}
 						{err && <b><p style={{color: "red"}}> {err} </p></b> }	
 						
 						<br />	
